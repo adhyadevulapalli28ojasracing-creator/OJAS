@@ -10,7 +10,7 @@ function showPage(n){
   const el=document.getElementById('nav-'+n);if(el)el.classList.add('active');
   window.scrollTo(0,0);
   if(n==='team')renderTeam('2025');
-  if(n==='achievements')renderAch('2024');
+  if(n==='achievements')renderAch('2025');
 }
 
 const teamData = {
@@ -32,26 +32,36 @@ const teamData = {
       {name:'Arjun Srikanth',role:'Aero & Composites Engineer',init:'AS'},
     ],
     chassis: [
-      {name:'Varun S',role:'Chassis Lead',init:'VS'},
+      {name:'Varun S',role:'Chassis Principal Engineer',init:'VS'},
       {name:'Adhish Maheshbabu',role:'Chassis Engineer',init:'AM'},
       {name:'Ananthya S',role:'Chassis Engineer',init:'AS'},
     ],
     vd: [
-      {name:'Advaith Krishna',role:'Vehicle Dynamics Lead',init:'AK'},
-      {name:'Navaneeth Baiju',role:'Vehicle Dynamics Lead',init:'NB'},
+      {name:'Advaith Krishna Thottiyil',role:'Vehicle Dynamics Principal Engineer & Driver',init:'AK'},
+      {name:'Navaneeth Baiju',role:'Kinematics & Steering Lead',init:'NB'},
       {name:'Jacob Jiby',role:'Vehicle Dynamics Engineer',init:'JJ'},
       {name:'Aryan Kokate',role:'Vehicle Dynamics Engineer',init:'AK'},
       {name:'Yusuf Ameer',role:'Vehicle Dynamics Engineer',init:'YA'},
     ],
     electronics: [
-      {name:'Farhan Ali',role:'Electronics Lead',init:'FA'},
-      {name:'Shruthi Kumar',role:'VCU Software',init:'SK'},
-      {name:'Om Desai',role:'Telemetry',init:'OD'},
+      {name:'Vishruth',role:'ESO',init:'VS'},
+      {name:'Sathvin',role:'Electrical Lead',init:'SS'},
+      {name:'Abhay Anand',role:'Electrical Lead',init:'AA'},
+      {name:'Krish Gupta',role:'Electrical Engineer',init:'KG'},
+      {name:'Krishna Kotikalapudi',role:'Electrical Engineer',init:'KK'},
+      {name:'Idhika Sharma',role:'Electrical Engineer',init:'IS'},
+      {name:'Sabharish Balaji',role:'Electrical Engineer',init:'SB'},
+      {name:'Raajvardhan Singh',role:'Electrical Engineer',init:'RS'},
     ],
     ops: [
       {name:'Subham Saha',role:'Operations Lead',init:'SS'},
+      {name:'Anirudh',role:'Operations Member',init:'AP'},
       {name:'Arthur Leslie',role:'Operations Member',init:'AL'},
-      {name:'Om Desai',role:'Telemetry',init:'OD'},
+      {name:'Prabhav Sharma',role:'Operations Member',init:'PS'},
+      {name:'Sushanth Bibi',role:'Operations Member',init:'SB'},
+      {name:'Tejashri Krishnakumar',role:'Operations Member',init:'TK'},
+      {name:'Tanushree Paidi',role:'Operations Member',init:'TP'},
+      {name:'Naval Aggarwal',role:'Operations Member',init:'NA'},
     ]
   },
   '2024': {
@@ -137,7 +147,7 @@ const teamData = {
   }
 };
 
-const deptNames = {leadership:'Team Leadership',powertrain:'Powertrain',aero:'Aerodynamics, Composites & Cooling',chassis:'Chassis & Design',vd:'Vehicle Dynamics & Brakes',electronics:'Electronics, VCU & Software'};
+const deptNames = {leadership:'Team Leadership',powertrain:'Powertrain',aero:'Aerodynamics, Composites & Cooling',chassis:'Chassis & Design',vd:'Vehicle Dynamics & Brakes',electronics:'Electrical',ops:'Operations'};
 function renderTeam(yr){
   const d=teamData[yr];if(!d)return;let h='';
   for(const[k,ms]of Object.entries(d)){h+=`<div class="ds"><div class="dlbl">${deptNames[k]||k}</div><div class="mg">`;for(const m of ms)h+=`<div class="mc"><div class="mav">${m.init}</div><div class="mn">${m.name}</div><div class="mr2">${m.role}</div></div>`;h+='</div></div>';}
@@ -146,10 +156,14 @@ function renderTeam(yr){
 function switchTeam(el,yr){document.querySelectorAll('.ytabs .ytab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderTeam(yr);}
 
 const achData={
-  '2024':{results:[{event:'Formula Student Germany',location:'Hockenheimring · DE',rank:'12',desc:'Completed all dynamic events. 12th overall out of 38 teams in Class 2.',tags:['Endurance Complete','All Dynamics']},{event:'Acceleration Event',location:'FSG 2024',rank:'8',desc:'8th fastest in Acceleration — best single dynamic event result.',tags:['Top 10 Dynamic']},{event:'Cost & Manufacturing',location:'FSG 2024',rank:'4',desc:'4th in Cost Event — testament to lean, student-built manufacturing.',tags:['Top 5 Static']}],awards:[{icon:'⚡',title:'Best EV Powertrain Design',body:'Special award for innovative in-house motor controller design at FSG 2024.'},{icon:'🎯',title:'Design Event — Top 10',body:'10th overall in Design with full technical presentation to an expert jury.'},{icon:'🔬',title:'Engineering Presentation',body:'Honourable mention for engineering clarity and documentation.'}]},
-  '2023':{results:[{event:'Formula Student Germany',location:'Hockenheimring · DE',rank:'18',desc:'First time completing all dynamic events. Major milestone for the team.',tags:['Milestone Season']},{event:'Skidpad Event',location:'FSG 2023',rank:'11',desc:'11th position — strong lateral dynamics performance.',tags:['Dynamic Event']}],awards:[{icon:'🏁',title:'Rookie Best Completion',body:'Recognised for completing all events as a young international team.'},{icon:'📐',title:'Business Plan — Top 15',body:'Strong business plan with compelling commercial viability.'}]},
-  '2022':{results:[{event:'Formula Student Germany',location:'Hockenheimring · DE',rank:'TI',desc:'Vehicle passed tech inspection — first international TI pass. DNF in endurance.',tags:['First Int. TI Pass']}],awards:[{icon:'🔩',title:'First International TI',body:'Historic first technical inspection clearance at an international event.'}]},
-  '2021':{results:[{event:'Formula Bharat (Online)',location:'Virtual Event · IN',rank:'6',desc:'6th overall in virtual event. Strong static event performance.',tags:['Top 10 National']}],awards:[{icon:'💡',title:'Best Concept Design',body:'Top award in concept design at Formula Bharat 2021.'}]}
+  '2025':{results:[{event:'Formula Student Concept Class',location:'Virtual Event · IN',rank:'1',desc:'Overall winners and a clean sweep in all events, cementing us as the best in India.',tags:['1st Overall']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Business Plan Presentation - this is not just a project, this is a business',tags:['Winners']},{event:'Cost & Manufacturing',location:'FSCC 2025',rank:'1',desc:'1st in Cost Event — testament to lean, student-built manufacturing.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Engineering Design Presentation - the ultimate proof of the best India can produce.',tags:['Winners']}],awards:[{icon:'⚡',title:'Best EV Powertrain Design',body:'Special award for innovative in-house motor controller design at FSG 2024.'},{icon:'🎯',title:'Design Event — Top 10',body:'10th overall in Design with full technical presentation to an expert jury.'},{icon:'🔬',title:'Engineering Presentation',body:'Honourable mention for engineering clarity and documentation.'}]},
+  '2024':{results:[{event:'Formula Student Germany',location:'Hockenheimring · DE',rank:'26',desc:'A return to the foremost stage. Among just two teams representing India',tags:['Return to the top stage']},{event:'Business Plan Presentation',location:'FSG 2024',rank:'26',desc:'The best from India',tags:['Statics Event']}],awards:[{icon:'🏁',title:'Rookie Best Completion',body:'Recognised for completing all events as a young international team.'},{icon:'📐',title:'Business Plan — Top 15',body:'Strong business plan with compelling commercial viability.'}]},
+  '2022':{results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit · IT',rank:'4',desc:'A close call away from podium, and the best from India',tags:['International Return']},{event:'Cost & Manufacturing',location:'Formula SAE Italy',rank:'4',desc:'4th in Cost Event — testament to our international standard of manufacturing at a fraction of the cost.',tags:['Best from Asia']}, {event:'Business Plan Presentation',location:'Formula SAE Italy',rank:'5',desc:'5th in Business Presentation',tags:['Top 5']}],awards:[{icon:'🔩',title:'First International TI',body:'Historic first technical inspection clearance at an international event.'}]},
+  '2021':{results:[{event:'Formula Bharat (Online)',location:'Virtual Event · IN',rank:'8',desc:'8th overall in virtual event. Strong static event performance.',tags:['Top 10 National']},{event:'Engineering Design Presentation',location:'Formula Bharat',rank:'7',desc:'Keeping our momentum alive during the Pandemic',tags:['Top 10 National']}],awards:[{icon:'💡',title:'Best Concept Design',body:'Top award in concept design at Formula Bharat 2021.'}]},
+  '2020':{results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit · IT',rank:'19',desc:'19th overall in an event hit by the Pandemic. Strong static event performance.',tags:['Top 10 National']}],awards:[{icon:'💡',title:'Best Concept Design',body:'Top award in concept design at Formula Bharat 2021.'}]},
+  '2019':{results:[{event:'Formula Student EV UK',location:'Silverstone Circuit · GB',rank:'7',desc:'7th Overall in our last event before the Pandemic.',tags:['Top 10']}],awards:[{icon:'💡',title:'Best Battery Design',body:'Top award in battery design.'},{icon:'💡',title:'Best Powertrain Design',body:'Top award in powertrain design.'}]},
+  '2018':{results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit · IT',rank:'19',desc:'19th overall in an event hit by the Pandemic. Strong static event performance.',tags:['Top 10 National']}],awards:[{icon:'💡',title:'Best Concept Design',body:'Top award in concept design at Formula Bharat 2021.'}]}
+
 };
 function renderAch(yr){
   const d=achData[yr];if(!d)return;
@@ -164,4 +178,4 @@ function switchAch(el,yr){document.querySelectorAll('#ach-tabs .ytab').forEach(t
 
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
-renderTeam('2025');renderAch('2024');
+renderTeam('2025');renderAch('2025');

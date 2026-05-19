@@ -40,7 +40,17 @@ nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:
 /* ── HERO ── */
 .hero{position:relative;height:calc(100vh - 62px);display:flex;align-items:flex-end;overflow:hidden}
 .hero-bg{position:absolute;inset:0;background:#030303}
-.hero-img{position:absolute;right:0;bottom:0;width:72%;height:100%;object-fit:cover;object-position:center center;mask-image:linear-gradient(to left,rgba(0,0,0,1) 30%,rgba(0,0,0,.7) 55%,transparent 78%);-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,1) 30%,rgba(0,0,0,.7) 55%,transparent 78%)}
+.hero-img{position:absolute;
+  right:0;
+  bottom:0;
+  width:62%;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  transform: translateX(10%);
+  mask-image:linear-gradient(to left,rgba(0,0,0,1) 30%,rgba(0,0,0,.7) 65%,transparent 88%);
+  -webkit-mask-image:linear-gradient(to left,rgba(0,0,0,1) 30%,rgba(0,0,0,.7) 65%,transparent 88%)}
+  
 .hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:64px 64px}
 .hero-scan{position:absolute;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:scan 6s ease-in-out infinite;opacity:.15}
 @keyframes scan{0%{top:-1%;opacity:0}8%{opacity:.15}92%{opacity:.15}100%{top:101%;opacity:0}}
