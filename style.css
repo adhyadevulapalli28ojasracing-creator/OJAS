@@ -18,6 +18,14 @@
 html{scroll-behavior:smooth}
 body{background:var(--black);color:var(--white);font-family:'Barlow',sans-serif;overflow-x:hidden;cursor:none}
 
+@font-face {
+  font-family: 'Sofachrome Italic'; /* Give your font a name */
+  src: url('fonts/SofachromeIt.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 #cur{position:fixed;width:7px;height:7px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
 #cur2{position:fixed;width:26px;height:26px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .14s ease;opacity:.5}
 
@@ -25,7 +33,7 @@ nav{position:fixed;top:0;left:0;width:100%;z-index:100;display:flex;align-items:
 .nl{display:flex;align-items:center;gap:10px;cursor:none}
 .nlm{width:32px;height:32px;flex-shrink:0}
 .nlm img{width:100%;height: 100%;object-fit:contain;filter:brightness(1.1)}
-.nlt{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:17px;letter-spacing:.10em;color:var(--white);text-transform:uppercase}
+.nlt{font-family:'Sofachrome Italic',sans-serif;font-weight:900;font-size:17px;letter-spacing:.10em;color:var(--white);text-transform:uppercase}
 .nlt span{color:var(--gold)}
 .nr{display:flex;gap:0;align-items:center}
 .nlink{color:var(--muted);font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:0 18px;height:62px;display:flex;align-items:center;border-right:1px solid var(--border);transition:color .2s;font-weight:500;cursor:none;background:none;border-top:none;border-bottom:none;border-left:none}

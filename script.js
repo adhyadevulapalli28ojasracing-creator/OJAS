@@ -9,20 +9,28 @@ function showPage(n){
   document.querySelectorAll('.nlink').forEach(l=>l.classList.remove('active'));
   const el=document.getElementById('nav-'+n);if(el)el.classList.add('active');
   window.scrollTo(0,0);
-  if(n==='team')renderTeam('2025');
+  if(n==='team')renderTeam('2026');
   if(n==='achievements')renderAch('2025');
 }
 
 const teamData = {
-  '2025': {
+  '2026': {
     leadership: [
       {name:'Abhay Anand',role:'Chief Executive Officer',init:'AA'},
       {name:'Yash Mangatt',role:'Chief Technical Officer',init:'YM'},
       {name:'Rohit Gandham',role:'Chief Operations Officer',init:'RG'},
+      {name:'Vishrudh GK',role:'Electrical Systems Officer',init:'VG'},
+      {name:'Suren Elango',role:'Autonomous Systems Officer',init:'SE'},
+    ],
+    pe: [
+      {name:'Varun S',role:'Structures',init:'VS'},
+      {name:'CS Sathvin',role:'Electrical & Powertrain',init:'CS'},
+      {name:'Advaith Krishna',role:'Vehicle Dynamics & Brakes',init:'AK'},
+
     ],
     powertrain: [
-      {name:'Rohit Gandham',role:'Powertrain Lead',init:'RG'},
-      {name:'Kamalesh M',role:'Drivetrain Lead',init:'KM'},
+      {name:'Rohit Gandham',role:'Battery Pack Lead',init:'RG'},
+      {name:'RB Kamalesh',role:'Drivetrain Lead',init:'KR'},
       {name:'Arthur Leslie',role:'Battery Pack Engineer',init:'AL'},
       {name:'Sushanth Bibi',role:'Drivetrain Engineer',init:'SB'},
     ],
@@ -32,21 +40,21 @@ const teamData = {
       {name:'Arjun Srikanth',role:'Aero & Composites Engineer',init:'AS'},
     ],
     chassis: [
-      {name:'Varun S',role:'Chassis Principal Engineer',init:'VS'},
+      {name:'Varun S',role:'Design Lead',init:'VS'},
       {name:'Adhish Maheshbabu',role:'Chassis Engineer',init:'AM'},
       {name:'Ananthya S',role:'Chassis Engineer',init:'AS'},
     ],
     vd: [
-      {name:'Advaith Krishna Thottiyil',role:'Vehicle Dynamics Principal Engineer & Driver',init:'AK'},
+      {name:'Advaith Krishna',role:'Vehicle Dynamics &',init:'AK'},
       {name:'Navaneeth Baiju',role:'Kinematics & Steering Lead',init:'NB'},
       {name:'Jacob Jiby',role:'Vehicle Dynamics Engineer',init:'JJ'},
       {name:'Aryan Kokate',role:'Vehicle Dynamics Engineer',init:'AK'},
       {name:'Yusuf Ameer',role:'Vehicle Dynamics Engineer',init:'YA'},
     ],
     electronics: [
-      {name:'Vishruth',role:'ESO',init:'VS'},
-      {name:'Sathvin',role:'Electrical Lead',init:'SS'},
-      {name:'Abhay Anand',role:'Electrical Lead',init:'AA'},
+      {name:'Vishrudh GK',role:'Software Lead',init:'VG'},
+      {name:'CS Sathvin',role:'Electrical Lead',init:'CS'},
+      {name:'Abhay Anand',role:'BPP Lead',init:'AA'},
       {name:'Krish Gupta',role:'Electrical Engineer',init:'KG'},
       {name:'Krishna Kotikalapudi',role:'Electrical Engineer',init:'KK'},
       {name:'Idhika Sharma',role:'Electrical Engineer',init:'IS'},
@@ -55,13 +63,43 @@ const teamData = {
     ],
     ops: [
       {name:'Subham Saha',role:'Operations Lead',init:'SS'},
-      {name:'Anirudh',role:'Operations Member',init:'AP'},
+      {name:'Anirudh Ponraj',role:'Operations Member',init:'AP'},
       {name:'Arthur Leslie',role:'Operations Member',init:'AL'},
       {name:'Prabhav Sharma',role:'Operations Member',init:'PS'},
       {name:'Sushanth Bibi',role:'Operations Member',init:'SB'},
       {name:'Tejashri Krishnakumar',role:'Operations Member',init:'TK'},
       {name:'Tanushree Paidi',role:'Operations Member',init:'TP'},
       {name:'Naval Aggarwal',role:'Operations Member',init:'NA'},
+    ],
+    auto: [
+      {name:'Veekshith Gali',role:'Path Planning Lead',init:'VG'},
+      {name:'Suren Elango',role:'Perception Lead',init:'SE'},
+      {name:'Krish Gupta',role:'Autonomous Engineer',init:'KG'},
+      {name:'Naval Aggarwal',role:'Autonomous Engineer',init:'NA'},
+      {name:'Krishna Kotikalapudi',role:'Autonomous Engineer',init:'KK'},
+      {name:'Sabharish Balaji',role:'Autonomous Engineer',init:'SB'},
+      {name:'Raajvardhan Singh',role:'Autonomous Engineer',init:'RS'},
+    ]
+  },
+  '2025': {
+    leadership: [
+      {name:'Ayush Shahapurkar',role:'Chief Executive Officer',init:'AS'},
+      {name:'Shubhang Sai',role:'Chief Technical Officer',init:'SS'},
+      {name:'Juzer Morudwala',role:'Electrical Systems Officer',init:'JM'},
+      {name:'Nitin S',role:'Autonomous Systems Officer',init:'NS'},
+      {name:'T Donald Noel',role:'Chief Operating Officer',init:'DN'},
+      {name:'Pranav S',role:'Chief Management Officer',init:'PS'},
+    ],
+    pe: [
+      {name:'Chetan Verma',role:'Software',init:'CV'},
+      {name:'Siddharth Das',role:'Electrical',init:'SD'},
+      {name:'Rishabh Ramakrishna',role:'Battery Pack',init:'RR'},
+      {name:'Aditya Santhosh',role:'Drivetrain',init:'AS'},
+      {name:'Abhaygopal Nistala',role:'Powertrain',init:'AN'},
+      {name:'Marc Stephen',role:'Vehicle Performance Lead',init:'MS'},
+      {name:'Padhma Kamalesh',role:'Structures & Design',init:'PK'},
+      {name:'Yajur Shah',role:'Engineering Design Presentation Lead',init:'YS'},
+
     ]
   },
   '2024': {
@@ -89,29 +127,6 @@ const teamData = {
   },
   '2023': {
     leadership: [
-      {name:'Vijay Menon',role:'Team Principal',init:'VM'},
-      {name:'Preethi Rao',role:'Deputy Principal',init:'PR'},
-    ],
-    powertrain: [
-      {name:'Kabir Anand',role:'Powertrain Lead',init:'KA'},
-      {name:'Deepa Nath',role:'HV Systems',init:'DN'},
-      {name:'Suraj Patil',role:'Motor Design',init:'SP'},
-    ],
-    aero: [
-      {name:'Lavanya Singh',role:'Aero Lead',init:'LS'},
-      {name:'Rahul Das',role:'CFD Analyst',init:'RD'},
-    ],
-    chassis: [
-      {name:'Kiara Mehta',role:'Chassis Lead',init:'KM'},
-      {name:'Aryan Roy',role:'Suspension',init:'AR'},
-    ],
-    electronics: [
-      {name:'Rohit Verma',role:'Electronics Lead',init:'RV'},
-      {name:'Pooja Iyer',role:'Embedded Systems',init:'PI'},
-    ]
-  },
-  '2022': {
-    leadership: [
       {name:'Aarav Shah',role:'Team Principal',init:'AS'},
       {name:'Divya Krishnan',role:'Chief Engineer',init:'DK'},
     ],
@@ -130,7 +145,7 @@ const teamData = {
       {name:'Chetan Joshi',role:'Electronics Lead',init:'CJ'},
     ]
   },
-  '2021': {
+  '2022': {
     leadership: [
       {name:'Sanjay Kumar',role:'Team Principal',init:'SK'},
     ],
@@ -147,7 +162,7 @@ const teamData = {
   }
 };
 
-const deptNames = {leadership:'Team Leadership',powertrain:'Powertrain',aero:'Aerodynamics, Composites & Cooling',chassis:'Chassis & Design',vd:'Vehicle Dynamics & Brakes',electronics:'Electrical',ops:'Operations'};
+const deptNames = {leadership:'Team Leadership',powertrain:'Powertrain',aero:'Aerodynamics, Composites & Cooling',chassis:'Chassis & Design',vd:'Vehicle Dynamics & Brakes',electronics:'Electrical',ops:'Operations', pe:'Principal Engineers', auto:'Autonomous'};
 function renderTeam(yr){
   const d=teamData[yr];if(!d)return;let h='';
   for(const[k,ms]of Object.entries(d)){h+=`<div class="ds"><div class="dlbl">${deptNames[k]||k}</div><div class="mg">`;for(const m of ms)h+=`<div class="mc"><div class="mav">${m.init}</div><div class="mn">${m.name}</div><div class="mr2">${m.role}</div></div>`;h+='</div></div>';}
@@ -156,7 +171,7 @@ function renderTeam(yr){
 function switchTeam(el,yr){document.querySelectorAll('.ytabs .ytab').forEach(t=>t.classList.remove('active'));el.classList.add('active');renderTeam(yr);}
 
 const achData={
-  '2025':{results:[{event:'Formula Student Concept Class',location:'Virtual Event · IN',rank:'1',desc:'Overall winners and a clean sweep in all events, cementing us as the best in India.',tags:['1st Overall']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Business Plan Presentation - this is not just a project, this is a business',tags:['Winners']},{event:'Cost & Manufacturing',location:'FSCC 2025',rank:'1',desc:'1st in Cost Event — testament to lean, student-built manufacturing.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Engineering Design Presentation - the ultimate proof of the best India can produce.',tags:['Winners']}],awards:[{icon:'⚡',title:'Best EV Powertrain Design',body:'Special award for innovative in-house motor controller design at FSG 2024.'},{icon:'🎯',title:'Design Event — Top 10',body:'10th overall in Design with full technical presentation to an expert jury.'},{icon:'🔬',title:'Engineering Presentation',body:'Honourable mention for engineering clarity and documentation.'}]},
+  '2025':{results:[{event:'Formula Student Concept Class',location:'Virtual Event · IN',rank:'1',desc:'Overall winners and a clean sweep in all events, cementing us as the best in India.',tags:['1st Overall']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Business Plan Presentation - this is not just a project, this is a business',tags:['Winners']},{event:'Cost & Manufacturing',location:'FSCC 2025',rank:'1',desc:'1st in Cost Event — testament to lean, student-built manufacturing.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'1st in Engineering Design Presentation - the ultimate proof of the best India can produce.',tags:['Winners']}],awards:[]},
   '2024':{results:[{event:'Formula Student Germany',location:'Hockenheimring · DE',rank:'26',desc:'A return to the foremost stage. Among just two teams representing India',tags:['Return to the top stage']},{event:'Business Plan Presentation',location:'FSG 2024',rank:'26',desc:'The best from India',tags:['Statics Event']}],awards:[{icon:'🏁',title:'Rookie Best Completion',body:'Recognised for completing all events as a young international team.'},{icon:'📐',title:'Business Plan — Top 15',body:'Strong business plan with compelling commercial viability.'}]},
   '2022':{results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit · IT',rank:'4',desc:'A close call away from podium, and the best from India',tags:['International Return']},{event:'Cost & Manufacturing',location:'Formula SAE Italy',rank:'4',desc:'4th in Cost Event — testament to our international standard of manufacturing at a fraction of the cost.',tags:['Best from Asia']}, {event:'Business Plan Presentation',location:'Formula SAE Italy',rank:'5',desc:'5th in Business Presentation',tags:['Top 5']}],awards:[{icon:'🔩',title:'First International TI',body:'Historic first technical inspection clearance at an international event.'}]},
   '2021':{results:[{event:'Formula Bharat (Online)',location:'Virtual Event · IN',rank:'8',desc:'8th overall in virtual event. Strong static event performance.',tags:['Top 10 National']},{event:'Engineering Design Presentation',location:'Formula Bharat',rank:'7',desc:'Keeping our momentum alive during the Pandemic',tags:['Top 10 National']}],awards:[{icon:'💡',title:'Best Concept Design',body:'Top award in concept design at Formula Bharat 2021.'}]},
@@ -178,4 +193,4 @@ function switchAch(el,yr){document.querySelectorAll('#ach-tabs .ytab').forEach(t
 
 const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:.1});
 document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
-renderTeam('2025');renderAch('2025');
+renderTeam('2026');renderAch('2025');
