@@ -268,7 +268,6 @@ function paintCarDisplay(year){
 
 function renderCars(activeYear = carData[0].year){
   const rail = document.querySelector('#car-years');
-  const display = document.querySelector('#car-display');
   rail.innerHTML = carData.map(car => `<button class="year-button ${car.year === activeYear ? 'active' : ''}" type="button" data-year="${car.year}">${car.year}</button>`).join('');
   paintCarDisplay(activeYear);
 
@@ -294,39 +293,15 @@ function renderTeamTabs(active = '2026'){
   tabs.querySelectorAll('button').forEach(button => button.addEventListener('click', () => renderTeam(button.dataset.teamYear)));
 }
 
-function renderTeam(year = '2026', skipAnimation = false){
+function renderTeam(year = '2026'){
   renderTeamTabs(year);
-  const display = document.querySelector('#team-display');
-  const delay = skipAnimation ? 0 : 300;
-  if (!skipAnimation) {
-    display.classList.add('animating');
-    display.classList.add('slide-out');
-  }
-  setTimeout(() => {
-    const data = teamData[year];
-    const groups = Object.entries(data);
-    const members = groups.flatMap(([,list]) => list);
-    const leads = members.filter(member => isLead(member.role,'')).length;
-    const intro = `<div class="team-intro"><p>Behind every system on this car is an individual who challenged convention, owned their craft and delivered results on one of the world's most demanding stages. Meet our race team.</p><div class="team-stats"><div><div class="scan"></div><b class="count" data-target="${members.length}">0</b><span>People</span></div><div><div class="scan"></div><b class="count" data-target="${groups.length}">0</b><span>Departments</span></div><div><div class="scan"></div><b class="count" data-target="${leads}">0</b><span>Leads</span></div></div></div>`;
-    const sections = groups.map(([key,list]) => `<section class="department"><div class="department-head"><h3>${deptNames[key] || key}</h3><small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small></div><div class="member-grid">${list.map(member => renderMember(member,year,key)).join('')}</div></section>`).join('');
-    display.innerHTML = intro + sections;
-    if (skipAnimation) {
-      display.classList.remove('slide-out');
-      display.style.transform = '';
-      display.style.opacity = '';
-    } else {
-      display.offsetHeight;
-      display.style.transform = 'translateX(-24px)';
-      display.style.opacity = '0';
-      display.classList.remove('slide-out');
-      requestAnimationFrame(() => {
-        display.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        display.style.transform = '';
-        display.style.opacity = '';
-      });
-    }
-    setTimeout(runCountUp, 400);
-  }, delay);
+  const data = teamData[year];
+  const groups = Object.entries(data);
+  const members = groups.flatMap(([,list]) => list);
+  const leads = members.filter(member => isLead(member.role,'')).length;
+  const intro = `<div class="team-intro"><p>The people behind the car, organised by subsystem. Every name here represents the engineering, operations and race-day discipline that carries Team Ojas from design review to the track.</p><div class="team-stats"><div><b>${members.length}</b><span>People</span></div><div><b>${groups.length}</b><span>Departments</span></div><div><b>${leads}</b><span>Leads</span></div></div></div>`;
+  const sections = groups.map(([key,list]) => `<section class="department"><div class="department-head"><h3>${deptNames[key] || key}</h3><small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small></div><div class="member-grid">${list.map(member => renderMember(member,year,key)).join('')}</div></section>`).join('');
+  document.querySelector('#team-display').innerHTML = intro + sections;
 }
 
 function renderMember(member,year,key){
@@ -440,49 +415,7 @@ setupHeaderScroll();
 setupCursor();
 setupReveal();
 renderCars();
-renderTeam('2026', true);
+renderTeam();
 renderAchievements();
 renderSponsors();
 setupCarousel();
-
-function setupTimelineAnimation(){
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.querySelectorAll('article').forEach((article,i)=>{
-          setTimeout(()=>article.classList.add('tl-visible'),i*140);
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:.2});
-  const timeline=document.querySelector('.about-timeline');
-  if(timeline)observer.observe(timeline);
-}
-setupTimelineAnimation();
-
-function runCountUp(){
-  document.querySelectorAll('.count').forEach(el=>{
-    const target=parseInt(el.dataset.target);const steps=40;let step=0;
-    el.textContent='0';
-    const t=setInterval(()=>{step++;el.textContent=Math.min(Math.round((target/steps)*step),target);if(step>=steps)clearInterval(t);},1200/steps);
-  });
-  document.querySelectorAll('.team-stats .scan').forEach((el,i)=>{
-    el.style.transition='none';el.style.transform='translateX(-100%)';
-    setTimeout(()=>{el.style.transition='transform 1s ease-out';el.style.transform='translateX(200%)';},i*150);
-  });
-}
-document.querySelectorAll('[data-page]').forEach(btn=>{
-  if(btn.dataset.page==='team')btn.addEventListener('click',()=>setTimeout(runCountUp,400));
-});
-
-document.querySelectorAll('.zz-label').forEach(el=>{
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){el.classList.add('visible');}
-      else{el.classList.remove('visible');}
-    });
-  },{threshold:.5});
-  observer.observe(el);
-});
-
