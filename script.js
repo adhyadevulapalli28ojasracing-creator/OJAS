@@ -173,30 +173,30 @@ const achData = {
 };
 
 const sponsorData = [
-  {tier:'Title Sponsor',title:'Powering The Mission',compact:false,items:[{name:'fabheads',logo:'fabheads',body:'Composite manufacturing and advanced fabrication support.'},{name:'Bender',logo:'BENDER',body:'Electrical safety and insulation monitoring support for high-voltage systems.'}]},
-  {tier:'Gold Partners',title:'Engineering Enablers',compact:false,items:[{name:'Dassault SolidWorks',logo:'SOLIDWORKS',body:'CAD platform for vehicle design and assembly workflows.'},{name:'Ansys Inc.',logo:'ANSYS',body:'Simulation support for CFD, FEA and design validation.'},{name:'Nvidia',logo:'NVIDIA',body:'Compute support for autonomous and perception systems.'},{name:'MathWorks',logo:'MATHWORKS',body:'Modeling, controls and calculation workflows.'}]},
-  {tier:'Associates',title:'Supporting Cast',compact:true,items:['HunterDouglas','Permabond','Novoflex','SBG Systems','BATEMO','Electrifuel','IPG','Ramani','VIT Vellore'].map(name => ({name,logo:name,body:'Team partner and technical supporter.'}))}
+  {tier:'Title Sponsor',title:'Powering The Mission',compact:false,items:[
+    {name:'Fabheads',logo:'assets/logos/logo-fabheads.png',body:'Composite manufacturing and advanced fabrication support.'},
+    {name:'Bender',logo:'assets/logos/logo-bender.png',body:'Electrical safety and insulation monitoring support for high-voltage systems.'}
+  ]},
+  {tier:'Gold Partners',title:'Engineering Enablers',compact:false,items:[
+    {name:'Dassault SolidWorks',logo:'assets/logos/logo-solidworks.png',body:'CAD platform for vehicle design and assembly workflows.'},
+    {name:'Ansys Inc.',logo:'assets/logos/logo-ansys.png',body:'Simulation support for CFD, FEA and design validation.'},
+    {name:'Nvidia',logo:'assets/logos/logo-nvidia.png',body:'Compute support for autonomous and perception systems.'},
+    {name:'MathWorks',logo:'assets/logos/logo-mathworks.png',body:'Modeling, controls and calculation workflows.'}
+  ]},
+  {tier:'Associates',title:'Supporting Cast',compact:true,items:[
+    {name:'HunterDouglas',logo:'assets/logos/logo-hunterdouglas.png',body:'Team partner and technical supporter.'},
+    {name:'Permabond',logo:'assets/logos/logo-permabond.png',body:'Team partner and technical supporter.'},
+    {name:'Novoflex',logo:'assets/logos/logo-novoflex.png',body:'Team partner and technical supporter.'},
+    {name:'SBG Systems',logo:'assets/logos/logo-sbgsystems.png',body:'Team partner and technical supporter.'},
+    {name:'Batemo',logo:'assets/logos/logo-batemo.png',body:'Team partner and technical supporter.'},
+    {name:'Electrifuel',logo:'assets/logos/logo-electrifuel.png',body:'Team partner and technical supporter.'},
+    {name:'IPG',logo:'assets/logos/logo-ipg.png',body:'Team partner and technical supporter.'},
+    {name:'Ramani',logo:'assets/logos/logo-ramani.png',body:'Team partner and technical supporter.'},
+    {name:'VIT Vellore',logo:'assets/logos/logo-vit.png',body:'Team partner and technical supporter.'}
+  ]}
 ];
 
-// Map company names to their exact URL and clearbit domain for logo generation
-const sponsorLinks = {
-  'fabheads': { url: 'https://fabheads.com/', domain: 'fabheads.com' },
-  'Bender': { url: 'https://www.bender.de/en/company/', domain: 'bender.de' },
-  'Dassault SolidWorks': { url: 'https://www.solidworks.com/', domain: 'solidworks.com' },
-  'Ansys Inc.': { url: 'https://www.ansys.com/about-ansys', domain: 'ansys.com' },
-  'Nvidia': { url: 'https://www.nvidia.com/en-us/about-nvidia/', domain: 'nvidia.com' },
-  'MathWorks': { url: 'https://www.mathworks.com/company/aboutus.html', domain: 'mathworks.com' },
-  'HunterDouglas': { url: 'https://www.hunterdouglas.com/', domain: 'hunterdouglas.com' },
-  'Permabond': { url: 'https://www.permabond.com/about-us/', domain: 'permabond.com' },
-  'Novoflex': { url: 'https://www.novoflex.com/about', domain: 'novoflex.com' },
-  'SBG Systems': { url: 'https://www.sbg-systems.com/company/', domain: 'sbg-systems.com' },
-  'BATEMO': { url: 'https://www.batemo.com/', domain: 'batemo.com' },
-  'Electrifuel': { url: 'https://electrifuel.com/', domain: 'electrifuel.com' },
-  'IPG': { url: 'https://ipg-automotive.com/en/', domain: 'ipg-automotive.com' },
-  'Ramani': { url: 'https://www.ramani.com/', domain: 'ramani.com' }, //New company name Crissangel
-  'VIT Vellore': { url: 'https://vit.ac.in/about-vit', domain: 'vit.ac.in' }
-};
-
+// ── NAVIGATION ──────────────────────────────────────────────
 function showPage(pageName){
   pages.forEach(page => page.classList.toggle('active', page.id === `page-${pageName}`));
   navLinks.forEach(link => {
@@ -215,15 +215,25 @@ function closeMenu(){
 }
 
 function setupNavigation(){
-  navButtons.forEach(button => button.addEventListener('click', () => showPage(button.dataset.page)));
+  // nav buttons and feature cards both navigate
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', () => showPage(el.dataset.page));
+  });
+
   menuToggle.addEventListener('click', () => {
     const open = !mobileMenu.classList.contains('open');
     mobileMenu.classList.toggle('open', open);
     mobileMenu.setAttribute('aria-hidden', String(!open));
     menuToggle.setAttribute('aria-expanded', String(open));
   });
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', e => {
+    if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
+  });
 }
 
+// ── CAR LINEUP ──────────────────────────────────────────────
 function formatCarName(name){
   const match = name.match(/^(TOR-)(.+)$/);
   return match ? `${match[1]}<span>${match[2]}</span>` : name;
@@ -233,8 +243,7 @@ function paintCarDisplay(year){
   const display = document.querySelector('#car-display');
   const galleryDisplay = document.querySelector('#car-gallery-display');
   const car = carData.find(item => item.year === year) || carData[0];
-  
-  // Create gallery HTML explicitly to span the full independent section width
+
   const galleryHTML = `
     <div class="accordion-gallery" aria-label="Image gallery for ${car.name}">
       ${car.gallery.map((img, i) => `
@@ -246,7 +255,6 @@ function paintCarDisplay(year){
     </div>
   `;
 
-  // Draw ONLY the info and hero media inside the split layout
   display.innerHTML = `
     <article class="car-info">
       <span class="car-badge">${car.season}</span>
@@ -261,14 +269,12 @@ function paintCarDisplay(year){
       <img src="${car.image}" alt="${car.name}">
     </figure>
   `;
-  
-  // Mount the gallery to the newly created full-width section below
+
   galleryDisplay.innerHTML = galleryHTML;
 }
 
 function renderCars(activeYear = carData[0].year){
   const rail = document.querySelector('#car-years');
-  const display = document.querySelector('#car-display');
   rail.innerHTML = carData.map(car => `<button class="year-button ${car.year === activeYear ? 'active' : ''}" type="button" data-year="${car.year}">${car.year}</button>`).join('');
   paintCarDisplay(activeYear);
 
@@ -284,6 +290,7 @@ function renderCars(activeYear = carData[0].year){
   });
 }
 
+// ── TEAM ────────────────────────────────────────────────────
 function photoSlug(name){return name.toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
 function isLead(role,key){return key === 'leadership' || key === 'pe' || /lead|officer|chief|principal|captain|director/i.test(role);}
 function memberPhoto(member,yr){return member.photo || `assets/team/${yr}/${photoSlug(member.name)}.jpg`;}
@@ -297,11 +304,12 @@ function renderTeamTabs(active = '2026'){
 function renderTeam(year = '2026', skipAnimation = false){
   renderTeamTabs(year);
   const display = document.querySelector('#team-display');
-  const delay = skipAnimation ? 0 : 300;
+
   if (!skipAnimation) {
     display.classList.add('animating');
     display.classList.add('slide-out');
   }
+
   setTimeout(() => {
     const data = teamData[year];
     const groups = Object.entries(data);
@@ -310,30 +318,33 @@ function renderTeam(year = '2026', skipAnimation = false){
     const intro = `<div class="team-intro"><p>Behind every system on this car is an individual who challenged convention, owned their craft and delivered results on one of the world's most demanding stages. Meet our race team.</p><div class="team-stats"><div><div class="scan"></div><b class="count" data-target="${members.length}">0</b><span>People</span></div><div><div class="scan"></div><b class="count" data-target="${groups.length}">0</b><span>Departments</span></div><div><div class="scan"></div><b class="count" data-target="${leads}">0</b><span>Leads</span></div></div></div>`;
     const sections = groups.map(([key,list]) => `<section class="department"><div class="department-head"><h3>${deptNames[key] || key}</h3><small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small></div><div class="member-grid">${list.map(member => renderMember(member,year,key)).join('')}</div></section>`).join('');
     display.innerHTML = intro + sections;
-    if (skipAnimation) {
-      display.classList.remove('slide-out');
-      display.style.transform = '';
-      display.style.opacity = '';
-    } else {
-      display.offsetHeight;
+
+    // Clean up animation state
+    display.style.transition = '';
+    display.style.transform = '';
+    display.style.opacity = '';
+    display.classList.remove('slide-out', 'animating');
+
+    if (!skipAnimation) {
       display.style.transform = 'translateX(-24px)';
       display.style.opacity = '0';
-      display.classList.remove('slide-out');
+      display.offsetHeight; // force reflow
       requestAnimationFrame(() => {
         display.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
         display.style.transform = '';
         display.style.opacity = '';
       });
     }
-    setTimeout(runCountUp, 400);
-  }, delay);
+
+    setTimeout(runCountUp, skipAnimation ? 0 : 400);
+  }, skipAnimation ? 0 : 300);
 }
 
 function renderMember(member,year,key){
-  const lead = isLead(member.role,key);
-return `<article class="member-card">${member.tag ? `<span class="lead-tag">${member.tag}</span>` : ''}<div class="member-photo"><span class="avatar">${member.init}</span><img src="${memberPhoto(member,year)}" alt="${member.name}" loading="lazy" onerror="this.remove()"></div><div class="member-meta"><h4>${member.name}</h4><p>${member.role}</p></div></article>`;
+  return `<article class="member-card">${member.tag ? `<span class="lead-tag">${member.tag}</span>` : ''}<div class="member-photo"><span class="avatar">${member.init}</span><img src="${memberPhoto(member,year)}" alt="${member.name}" loading="lazy" onerror="this.remove()"></div><div class="member-meta"><h4>${member.name}</h4><p>${member.role}</p></div></article>`;
 }
 
+// ── ACHIEVEMENTS ────────────────────────────────────────────
 function renderAchTabs(active = '2025'){
   const tabs = document.querySelector('#ach-tabs');
   tabs.innerHTML = Object.keys(achData).map(year => `<button type="button" class="${year === active ? 'active' : ''}" data-ach-year="${year}">${year}</button>`).join('');
@@ -351,39 +362,74 @@ function renderAchievements(year = '2025'){
   document.querySelector('#ach-display').innerHTML = `<p class="section-label">${year} Season Results</p>${results}<div class="awards-wrap"><p class="section-label">Awards and Recognition</p>${awards}</div>`;
 }
 
+// ── SPONSORS PAGE ────────────────────────────────────────────
 function renderSponsors(){
-  document.querySelector('#sponsor-display').innerHTML = sponsorData.map(tier => `<section class="tier"><div class="tier-head"><span class="tier-label">${tier.tier}</span><h3>${tier.title}</h3></div><div class="sponsor-grid ${tier.compact ? 'compact' : ''}">${tier.items.map(item => `<article class="sponsor-card"><div class="logo-box">${item.logo}</div><div><h4>${item.name}</h4><p>${item.body}</p></div></article>`).join('')}</div></section>`).join('');
+  document.querySelector('#sponsor-display').innerHTML = sponsorData.map(tier => `
+    <section class="tier">
+      <div class="tier-head">
+        <span class="tier-label">${tier.tier}</span>
+        <h3>${tier.title}</h3>
+      </div>
+      <div class="sponsor-grid ${tier.compact ? 'compact' : ''}">
+        ${tier.items.map(item => `
+          <article class="sponsor-card">
+            <div class="logo-box">
+              <img src="${item.logo}" alt="${item.name} logo" loading="lazy"
+                   onerror="this.outerHTML='<span>${item.name}</span>'">
+            </div>
+            <div>
+              <h4>${item.name}</h4>
+              <p>${item.body}</p>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    </section>
+  `).join('');
 }
 
+// ── SPONSOR CAROUSEL ─────────────────────────────────────────
 function setupCarousel(){
   const carouselElement = document.querySelector('#sponsor-carousel');
   if (!carouselElement) return;
-  
+
   const track = carouselElement.querySelector('.carousel-track');
-  
-  const sponsors = [];
-  sponsorData.forEach(tier => {
-    tier.items.forEach(item => {
-      const sponsorName = typeof item === 'string' ? item : item.name;
-      const linkData = sponsorLinks[sponsorName] || { url: '#', domain: 'example.com' };
-      sponsors.push({ name: sponsorName, url: linkData.url, domain: linkData.domain });
-    });
-  });
-  
-  // Renders the Anchor tag encompassing an image, gracefully falling back to text if the image fails to load.
-  const renderSet = (hidden) => sponsors.map((sponsor, index) =>
-    `<a href="${sponsor.url}" target="_blank" rel="noopener noreferrer" class="carousel-item" data-index="${index}"${hidden ? ' aria-hidden="true" tabindex="-1"' : ''}>
-       <img src="https://logo.clearbit.com/${sponsor.domain}" alt="${sponsor.name} Logo" loading="lazy" onerror="this.outerHTML='<span>${sponsor.name}</span>'">
+
+  const sponsors = [
+    { name:'Fabheads',      logo:'assets/logos/fabheads.png',      url:'https://fabheads.com/' },
+    { name:'Bender',        logo:'assets/logos/bender.png',        url:'https://www.bender.de/en/company/' },
+    { name:'SolidWorks',    logo:'assets/logos/solidworks.png',    url:'https://www.solidworks.com/' },
+    { name:'Ansys',         logo:'assets/logos/ansys.png',         url:'https://www.ansys.com/' },
+    { name:'Nvidia',        logo:'assets/logos/nvidia.png',        url:'https://www.nvidia.com/' },
+    { name:'MathWorks',     logo:'assets/logos/mathworks.png',     url:'https://www.mathworks.com/' },
+    { name:'HunterDouglas', logo:'assets/logos/hunterdouglas.png', url:'https://www.hunterdouglas.com/' },
+    { name:'Permabond',     logo:'assets/logos/permabond.png',     url:'https://www.permabond.com/' },
+    { name:'Novoflex',      logo:'assets/logos/novoflex.png',      url:'https://www.novoflex.com/' },
+    { name:'SBG Systems',   logo:'assets/logos/sbgsystems.png',    url:'https://www.sbg-systems.com/' },
+    { name:'Batemo',        logo:'assets/logos/batemo.png',        url:'https://www.batemo.com/' },
+    { name:'Electrifuel',   logo:'assets/logos/electrifuel.png',   url:'https://electrifuel.com/' },
+    { name:'IPG',           logo:'assets/logos/ipg.png',           url:'https://ipg-automotive.com/' },
+    { name:'Ramani',        logo:'assets/logos/ramani.png',        url:'https://www.ramani.com/' },
+    { name:'VIT Vellore',   logo:'assets/logos/vit.png',           url:'https://vit.ac.in/' },
+  ];
+
+  const renderSet = (hidden) => sponsors.map(s =>
+    `<a href="${s.url}" target="_blank" rel="noopener noreferrer"
+        class="carousel-item"
+        ${hidden ? 'aria-hidden="true" tabindex="-1"' : ''}>
+       <img src="${s.logo}" alt="${s.name}" loading="lazy"
+            onerror="this.closest('a').style.display='none'">
      </a>`
   ).join('');
-  
+
   track.innerHTML = renderSet(false) + renderSet(true);
-  
-  // Speed reduced by 10% (Multiplying duration by ~1.11)
-  const duration = Math.max(sponsors.length * 2, 16) * 1.11;
+
+  // ~2.4s per logo, minimum 20s
+  const duration = Math.max(sponsors.length * 2.4, 20);
   track.style.animationDuration = duration + 's';
 }
 
+// ── HEADER SCROLL HIDE ───────────────────────────────────────
 function setupHeaderScroll(){
   const nav = document.querySelector('.site-nav');
   if (!nav) return;
@@ -394,7 +440,6 @@ function setupHeaderScroll(){
 
   function onScroll(){
     const currentScrollY = window.scrollY;
-
     if (currentScrollY <= revealThreshold) {
       nav.classList.remove('nav-hidden');
     } else if (currentScrollY > lastScrollY) {
@@ -403,19 +448,16 @@ function setupHeaderScroll(){
     } else if (currentScrollY < lastScrollY) {
       nav.classList.remove('nav-hidden');
     }
-
     lastScrollY = currentScrollY;
     ticking = false;
   }
 
   window.addEventListener('scroll', () => {
-    if (!ticking) {
-      window.requestAnimationFrame(onScroll);
-      ticking = true;
-    }
+    if (!ticking) { window.requestAnimationFrame(onScroll); ticking = true; }
   }, {passive: true});
 }
 
+// ── CUSTOM CURSOR ────────────────────────────────────────────
 function setupCursor(){
   if (matchMedia('(pointer: coarse)').matches) return;
   document.addEventListener('mousemove', event => {
@@ -428,6 +470,7 @@ function setupCursor(){
   document.addEventListener('mouseup', () => { cursorRing.style.width = '30px'; cursorRing.style.height = '30px'; });
 }
 
+// ── SCROLL REVEAL ────────────────────────────────────────────
 function setupReveal(){
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
@@ -435,54 +478,72 @@ function setupReveal(){
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
+// ── TIMELINE ANIMATION ───────────────────────────────────────
+function setupTimelineAnimation(){
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.querySelectorAll('article').forEach((article,i) => {
+          setTimeout(() => article.classList.add('tl-visible'), i * 140);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.2});
+  const timeline = document.querySelector('.about-timeline');
+  if(timeline) observer.observe(timeline);
+}
+
+// ── COUNT UP ─────────────────────────────────────────────────
+function runCountUp(){
+  document.querySelectorAll('.count').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const steps = 40;
+    let step = 0;
+    el.textContent = '0';
+    const t = setInterval(() => {
+      step++;
+      el.textContent = Math.min(Math.round((target/steps)*step), target);
+      if(step >= steps) clearInterval(t);
+    }, 1200/steps);
+  });
+  document.querySelectorAll('.team-stats .scan').forEach((el,i) => {
+    el.style.transition = 'none';
+    el.style.transform = 'translateX(-100%)';
+    setTimeout(() => {
+      el.style.transition = 'transform 1s ease-out';
+      el.style.transform = 'translateX(200%)';
+    }, i * 150);
+  });
+}
+
+// ── ZZ LABEL VISIBILITY ──────────────────────────────────────
+function setupZZLabels(){
+  document.querySelectorAll('.zz-label').forEach(el => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) el.classList.add('visible');
+        else el.classList.remove('visible');
+      });
+    }, {threshold:.5});
+    observer.observe(el);
+  });
+}
+
+// ── INIT ─────────────────────────────────────────────────────
 setupNavigation();
 setupHeaderScroll();
 setupCursor();
 setupReveal();
+setupTimelineAnimation();
+setupZZLabels();
 renderCars();
 renderTeam('2026', true);
 renderAchievements();
 renderSponsors();
 setupCarousel();
 
-function setupTimelineAnimation(){
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.querySelectorAll('article').forEach((article,i)=>{
-          setTimeout(()=>article.classList.add('tl-visible'),i*140);
-        });
-        observer.unobserve(entry.target);
-      }
-    });
-  },{threshold:.2});
-  const timeline=document.querySelector('.about-timeline');
-  if(timeline)observer.observe(timeline);
-}
-setupTimelineAnimation();
-
-function runCountUp(){
-  document.querySelectorAll('.count').forEach(el=>{
-    const target=parseInt(el.dataset.target);const steps=40;let step=0;
-    el.textContent='0';
-    const t=setInterval(()=>{step++;el.textContent=Math.min(Math.round((target/steps)*step),target);if(step>=steps)clearInterval(t);},1200/steps);
-  });
-  document.querySelectorAll('.team-stats .scan').forEach((el,i)=>{
-    el.style.transition='none';el.style.transform='translateX(-100%)';
-    setTimeout(()=>{el.style.transition='transform 1s ease-out';el.style.transform='translateX(200%)';},i*150);
-  });
-}
-document.querySelectorAll('[data-page]').forEach(btn=>{
-  if(btn.dataset.page==='team')btn.addEventListener('click',()=>setTimeout(runCountUp,400));
+// Trigger countup when team tab is clicked from another page
+document.querySelectorAll('[data-page]').forEach(btn => {
+  if(btn.dataset.page === 'team') btn.addEventListener('click', () => setTimeout(runCountUp, 400));
 });
-
-document.querySelectorAll('.zz-label').forEach(el=>{
-  const observer=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){el.classList.add('visible');}
-      else{el.classList.remove('visible');}
-    });
-  },{threshold:.5});
-  observer.observe(el);
-});
-
