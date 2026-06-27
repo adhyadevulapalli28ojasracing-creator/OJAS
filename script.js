@@ -14,15 +14,62 @@ const stockGallery = [
   'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop'
 ];
 
-const carData = [
-  {year:'2024',season:'Current Build - Season 9',name:'TOR-24',image:'assets/tor-24.jpg', gallery: stockGallery, desc:'Our most refined machine to date with a laser-cut spaceframe, full aero package and improved high-voltage systems for Formula Student Germany 2024.',specs:{'Peak Power':'80 kW','0-100 km/h':'3.6 s','Accumulator':'6.2 kWh','Mass':'238 kg','Downforce':'420 N','Wheelbase':'1540 mm'}},
-  {year:'2020',season:'Season 8',name:'TOR-20',image:'assets/tor-20-render.png', gallery: stockGallery, desc:'A major step forward with full aero development, improved powertrain packaging and stronger validation workflows.',specs:{'Peak Power':'72 kW','0-100 km/h':'4.8 s','Accumulator':'5.8 kWh','Mass':'252 kg'}},
-  {year:'2018',season:'Season 7',name:'TOR-18',image:'assets/tor-18.webp', gallery: stockGallery, desc:'A pre-pandemic benchmark generation focused on manufacturing maturity, race reliability and stronger static event preparation.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.6 s','Accumulator':'5.0 kWh','Mass':'268 kg'}},
-  {year:'2017',season:'Season 6',name:'TOR-17',image:'assets/tor-17-render.png', gallery: stockGallery, desc:'An important design iteration that helped mature the team architecture, testing discipline and subsystem ownership.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.7 s','Accumulator':'5.0 kWh','Mass':'270 kg'}},
-  {year:'2016',season:'Season 5',name:'TOR-16',image:'assets/tor-16.png', gallery: stockGallery, desc:'A foundational competitive car that strengthened the team culture and set the direction for future electric race builds.',specs:{'Peak Power':'55 kW','0-100 km/h':'5.9 s','Accumulator':'4.8 kWh','Mass':'272 kg'}},
-  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-18-render.png', gallery: stockGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}}
+// TO — give each car its own gallery array
+const tor24Gallery = [
+  'assets/cars/tor24-1.png',
+  'assets/cars/tor24-2.png',
+  'assets/cars/tor24-3.png',
+  'assets/cars/tor24-4.png'
 ];
 
+const tor20Gallery = [
+  'assets/cars/tor20-1.png',
+  'assets/cars/tor20-2.png',
+  'assets/cars/tor20-3.png',
+  'assets/cars/tor20-4.png'
+];
+
+const tor18Gallery = [
+  'assets/cars/tor18-1.png',
+  'assets/cars/tor18-2.png',
+  'assets/cars/tor18-3.png',
+  'assets/cars/tor18-4.png'
+];
+
+const tor17Gallery = [
+  'assets/cars/tor17-1.png',
+  'assets/cars/tor17-2.png',
+  'assets/cars/tor17-3.png',
+  'assets/cars/tor17-4.png'
+];
+
+const tor16Gallery = [
+  'assets/cars/tor16-1.png',
+  'assets/cars/tor16-2.png',
+  'assets/cars/tor16-3.png',
+  'assets/cars/tor16-4.png'
+];
+
+const originGallery = [
+  'assets/cars/origin-1.png',
+  'assets/cars/origin-2.png',
+  'assets/cars/origin-3.png',
+  'assets/cars/origin-4.png'
+];
+
+
+
+
+
+const carData = [
+  {year:'2024',season:'Current Build - Season 9',name:'TOR-24',image:'assets/tor-24.jpg', gallery: tor24Gallery, desc:'Our most refined machine to date with a laser-cut spaceframe, full aero package and improved high-voltage systems for Formula Student Germany 2024.',specs:{'Peak Power':'80 kW','0-100 km/h':'3.6 s','Accumulator':'6.2 kWh','Mass':'238 kg','Downforce':'420 N','Wheelbase':'1540 mm'}},
+  {year:'2020',season:'Season 8',name:'TOR-20',image:'assets/tor-20-render.png', gallery: tor20Gallery, desc:'A major step forward with full aero development, improved powertrain packaging and stronger validation workflows.',specs:{'Peak Power':'72 kW','0-100 km/h':'4.8 s','Accumulator':'5.8 kWh','Mass':'252 kg'}},
+  {year:'2018',season:'Season 7',name:'TOR-18',image:'assets/tor-18.webp', gallery: tor18Gallery, desc:'A pre-pandemic benchmark generation focused on manufacturing maturity, race reliability and stronger static event preparation.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.6 s','Accumulator':'5.0 kWh','Mass':'268 kg'}},
+  {year:'2017',season:'Season 6',name:'TOR-17',image:'assets/tor-17-render.png', gallery: tor17Gallery, desc:'An important design iteration that helped mature the team architecture, testing discipline and subsystem ownership.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.7 s','Accumulator':'5.0 kWh','Mass':'270 kg'}},
+  {year:'2016',season:'Season 5',name:'TOR-16',image:'assets/tor-16.png', gallery: tor16Gallery, desc:'A foundational competitive car that strengthened the team culture and set the direction for future electric race builds.',specs:{'Peak Power':'55 kW','0-100 km/h':'5.9 s','Accumulator':'4.8 kWh','Mass':'272 kg'}},
+  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-18-render.png', gallery: originGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}} 
+];
+ 
 const teamData = {
   '2026': {
     leadership: [
@@ -249,7 +296,7 @@ function paintCarDisplay(year){
       ${car.gallery.map((img, i) => `
         <div class="accordion-panel ${i === 0 ? 'active' : ''}" onclick="this.parentElement.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('active')); this.classList.add('active');">
           <img src="${img}" alt="${car.name} detail view ${i+1}" loading="lazy">
-          <span class="accordion-label">Angle 0${i+1}</span>
+    
         </div>
       `).join('')}
     </div>
@@ -403,7 +450,7 @@ function setupCarousel(){
     { name:'Nvidia',        logo:'assets/logos/nvidia.png',        url:'https://www.nvidia.com/' },
     { name:'MathWorks',     logo:'assets/logos/mathworks.png',     url:'https://www.mathworks.com/' },
     { name:'HunterDouglas', logo:'assets/logos/hunterdouglas.png', url:'https://www.hunterdouglas.com/' },
-    { name:'Permabond',     logo:'assets/logos/permabond.png',     url:'https://www.permabond.com/' },
+    { name:'IMA',     logo:'assets/logos/ima.png',                 url:'https://indianmotorsportsacademy.com/' },
     { name:'Novoflex',      logo:'assets/logos/novoflex.png',      url:'https://www.novoflex.com/' },
     { name:'SBG Systems',   logo:'assets/logos/sbgsystems.png',    url:'https://www.sbg-systems.com/' },
     { name:'Batemo',        logo:'assets/logos/batemo.png',        url:'https://www.batemo.com/' },
