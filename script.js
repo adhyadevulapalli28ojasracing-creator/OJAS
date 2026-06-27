@@ -57,10 +57,6 @@ const originGallery = [
   'assets/cars/origin-4.png'
 ];
 
-
-
-
-
 const carData = [
   {year:'2024',season:'Current Build - Season 9',name:'TOR-24',image:'assets/tor-24.jpg', gallery: tor24Gallery, desc:'Our most refined machine to date with a laser-cut spaceframe, full aero package and improved high-voltage systems for Formula Student Germany 2024.',specs:{'Peak Power':'80 kW','0-100 km/h':'3.6 s','Accumulator':'6.2 kWh','Mass':'238 kg','Downforce':'420 N','Wheelbase':'1540 mm'}},
   {year:'2020',season:'Season 8',name:'TOR-20',image:'assets/tor-20-render.png', gallery: tor20Gallery, desc:'A major step forward with full aero development, improved powertrain packaging and stronger validation workflows.',specs:{'Peak Power':'72 kW','0-100 km/h':'4.8 s','Accumulator':'5.8 kWh','Mass':'252 kg'}},
