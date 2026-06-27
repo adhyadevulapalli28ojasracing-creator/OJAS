@@ -340,14 +340,34 @@ function memberPhoto(member,yr){return member.photo || `assets/team/${yr}/${phot
 
 function renderTeamTabs(active = '2026'){
   const tabs = document.querySelector('#team-tabs');
-  tabs.innerHTML = Object.keys(teamData).map(year => `<button type="button" class="${year === active ? 'active' : ''}" data-team-year="${year}">${year} Season</button>`).join('');
+  tabs.innerHTML = Object.keys(teamData).reverse().map(year => `<button type="button" class="${year === active ? 'active' : ''}" data-team-year="${year}">${year} Season</button>`).join('');
   tabs.querySelectorAll('button').forEach(button => button.addEventListener('click', () => renderTeam(button.dataset.teamYear)));
 }
 
 function renderTeam(year = '2026', skipAnimation = false){
   renderTeamTabs(year);
+  const d = teamData[year];
+  const allMembers = Object.values(d).flat();
+  const uniqueMembers = [...new Map(allMembers.map(m => [m.name, m])).values()];
+  const deptCount = Object.keys(d).length;
+  const leadCount = uniqueMembers.filter(m => isLead(m.role,'')).length;
+  const heroP = document.querySelector('#hero-people');
+  const heroD = document.querySelector('#hero-depts');
+  const heroL = document.querySelector('#hero-leads');
+  function animateCount(el, target){
+    const steps=40; let step=0;
+    el.textContent='0';
+    const t=setInterval(()=>{step++;el.textContent=Math.min(Math.round((target/steps)*step),target);if(step>=steps)clearInterval(t);},1200/steps);
+  }
+  if(heroP) animateCount(heroP, uniqueMembers.length);
+  if(heroD) animateCount(heroD, deptCount);
+  if(heroL) animateCount(heroL, leadCount);
+  document.querySelectorAll('.team-hero-stats .scan').forEach((el,i)=>{
+    el.style.transition='none';el.style.transform='translateX(-100%)';
+    setTimeout(()=>{el.style.transition='transform 1s ease-out';el.style.transform='translateX(200%)';},i*150);
+  });
   const display = document.querySelector('#team-display');
-
+  const delay = skipAnimation ? 0 : 300;
   if (!skipAnimation) {
     display.classList.add('animating');
     display.classList.add('slide-out');
@@ -358,9 +378,8 @@ function renderTeam(year = '2026', skipAnimation = false){
     const groups = Object.entries(data);
     const members = groups.flatMap(([,list]) => list);
     const leads = members.filter(member => isLead(member.role,'')).length;
-    const intro = `<div class="team-intro"><p>Behind every system on this car is an individual who challenged convention, owned their craft and delivered results on one of the world's most demanding stages. Meet our race team.</p><div class="team-stats"><div><div class="scan"></div><b class="count" data-target="${members.length}">0</b><span>People</span></div><div><div class="scan"></div><b class="count" data-target="${groups.length}">0</b><span>Departments</span></div><div><div class="scan"></div><b class="count" data-target="${leads}">0</b><span>Leads</span></div></div></div>`;
     const sections = groups.map(([key,list]) => `<section class="department"><div class="department-head"><h3>${deptNames[key] || key}</h3><small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small></div><div class="member-grid">${list.map(member => renderMember(member,year,key)).join('')}</div></section>`).join('');
-    display.innerHTML = intro + sections;
+    display.innerHTML = sections;
 
     // Clean up animation state
     display.style.transition = '';
@@ -384,6 +403,7 @@ function renderTeam(year = '2026', skipAnimation = false){
 }
 
 function renderMember(member,year,key){
+  const lead = isLead(member.role,key);
   return `<article class="member-card">${member.tag ? `<span class="lead-tag">${member.tag}</span>` : ''}<div class="member-photo"><span class="avatar">${member.init}</span><img src="${memberPhoto(member,year)}" alt="${member.name}" loading="lazy" onerror="this.remove()"></div><div class="member-meta"><h4>${member.name}</h4><p>${member.role}</p></div></article>`;
 }
 
