@@ -206,36 +206,54 @@ const teamData = {
 const deptNames = {leadership:'Team Leadership',pe:'Principal Engineers',powertrain:'Powertrain',aero:'Aerodynamics and Composites',chassis:'Chassis and Design',vd:'Vehicle Dynamics and Brakes',electronics:'Electrical and Software',ops:'Operations',auto:'Autonomous',departmentHeads: 'Department Heads'};
 
 const achData = {
-  '2025': {results:[{event:'Formula Student Concept Class',location:'Virtual Event - IN',rank:'1',desc:'Overall winners with a clean sweep across major static events.',tags:['1st Overall','Clean Sweep']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'A winning commercial case for a serious student-built EV race program.',tags:['Winners']},{event:'Cost and Manufacturing',location:'FSCC 2025',rank:'1',desc:'Lean manufacturing choices and strong cost-performance discipline.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'A strong technical defense of the complete vehicle design.',tags:['Winners']}],awards:[]},
-  '2024': {results:[{event:'Formula Student Germany',location:'Hockenheimring - DE',rank:'26',desc:'Returned to one of the toughest Formula Student stages as one of the Indian representatives.',tags:['Global Stage']},{event:'Business Plan Presentation',location:'FSG 2024',rank:'26',desc:'Static event performance against elite international competition.',tags:['Static Event']}],awards:[{title:'International Return',body:'A major step back onto the global Formula Student grid.'},{title:'Static Event Growth',body:'Improved documentation, design defense and business positioning.'}]},
-  '2022': {results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit - IT',rank:'4',desc:'A strong international result and one of the best performances from India.',tags:['Top 5','Best From Asia']},{event:'Cost and Manufacturing',location:'Formula SAE Italy',rank:'4',desc:'High manufacturing maturity at a fraction of typical race program cost.',tags:['Top 5']},{event:'Business Plan Presentation',location:'Formula SAE Italy',rank:'5',desc:'A sharp business case that placed inside the top five.',tags:['Top 5']}],awards:[{title:'International TI',body:'Historic technical inspection progress at an international event.'}]},
-  '2021': {results:[{event:'Formula Bharat Online',location:'Virtual Event - IN',rank:'8',desc:'Maintained competitive momentum during the pandemic.',tags:['Top 10']},{event:'Engineering Design Presentation',location:'Formula Bharat',rank:'7',desc:'Strong static event showing with design continuity.',tags:['Top 10']}],awards:[{title:'Concept Design',body:'Recognized for concept maturity and system-level thinking.'}]},
-  '2020': {results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit - IT',rank:'19',desc:'Competed through a difficult season impacted by global disruption.',tags:['International']}],awards:[{title:'Resilience',body:'Kept the program moving under difficult constraints.'}]},
-  '2019': {results:[{event:'Formula Student EV UK',location:'Silverstone Circuit - GB',rank:'7',desc:'A top-ten international result before the pandemic break.',tags:['Top 10']}],awards:[{title:'Battery Design',body:'Recognized for battery system design.'},{title:'Powertrain Design',body:'Recognized for powertrain development.'}]},
-  '2018': {results:[{event:'Formula Bharat',location:'Kari Motor Speedway - IN',rank:'3',desc:'A national podium and one of the team\'s strongest early results.',tags:['National Podium']},{event:'FSEV Cost Report',location:'Formula Bharat 2018',rank:'1',desc:'A standout cost-performance result.',tags:['Winners']},{event:'FSEV Business Plan',location:'Formula Bharat 2018',rank:'3',desc:'Strong commercial storytelling and presentation quality.',tags:['National Podium']}],awards:[]}
+  '2025': {
+    gallery:['assets/achievements/1175-47.jpg','assets/achievements/1138-12.jpg','assets/achievements/1147-21.jpg','assets/achievements/1164-37.jpg','assets/achievements/1125-1.jpg'],
+    results:[{event:'Formula Student Concept Class',location:'Virtual Event - IN',rank:'1',desc:'Overall winners with a clean sweep across major static events.',tags:['1st Overall','Clean Sweep']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'A winning commercial case for a serious student-built EV race program.',tags:['Winners']},{event:'Cost and Manufacturing',location:'FSCC 2025',rank:'1',desc:'Lean manufacturing choices and strong cost-performance discipline.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'A strong technical defense of the complete vehicle design.',tags:['Winners']}],awards:[]},
+  '2024': {
+    gallery:['assets/achievements/8201.JPG','assets/achievements/8180.JPG','assets/achievements/8172.JPG','assets/achievements/8163.JPG','assets/achievements/8161.JPG'],
+    results:[{event:'Formula Student Germany',location:'Hockenheimring - DE',rank:'26',desc:'Returned to one of the toughest Formula Student stages as one of the Indian representatives.',tags:['Global Stage']},{event:'Business Plan Presentation',location:'FSG 2024',rank:'26',desc:'Static event performance against elite international competition.',tags:['Static Event']}],awards:[{title:'International Return',body:'A major step back onto the global Formula Student grid.'},{title:'Static Event Growth',body:'Improved documentation, design defense and business positioning.'}]},
+  '2022': {
+    gallery:['assets/achievements/2101.jpg','assets/achievements/2105.JPG','assets/achievements/2102.jpg','assets/achievements/2104.jpg','assets/achievements/2103.jpg'],
+    results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit - IT',rank:'4',desc:'A strong international result and one of the best performances from India.',tags:['Top 5','Best From Asia']},{event:'Cost and Manufacturing',location:'Formula SAE Italy',rank:'4',desc:'High manufacturing maturity at a fraction of typical race program cost.',tags:['Top 5']},{event:'Business Plan Presentation',location:'Formula SAE Italy',rank:'5',desc:'A sharp business case that placed inside the top five.',tags:['Top 5']}],awards:[{title:'International TI',body:'Historic technical inspection progress at an international event.'}]},
+  '2021': {
+    gallery:[],
+    results:[{event:'Formula Bharat Online',location:'Virtual Event - IN',rank:'8',desc:'Maintained competitive momentum during the pandemic.',tags:['Top 10']},{event:'Engineering Design Presentation',location:'Formula Bharat',rank:'7',desc:'Strong static event showing with design continuity.',tags:['Top 10']}],awards:[{title:'Concept Design',body:'Recognized for concept maturity and system-level thinking.'}]},
+  '2020': {
+    gallery:[],
+    results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit - IT',rank:'19',desc:'Competed through a difficult season impacted by global disruption.',tags:['International']}],awards:[{title:'Resilience',body:'Kept the program moving under difficult constraints.'}]},
+  '2019': {
+    gallery:[],
+    results:[
+      {event:'Formula Student EV UK',location:'Silverstone Circuit - GB',rank:'7',desc:'A top-ten international result before the pandemic break.',tags:['Top 10']},
+      {event:'Best Battery Design',location:'FSEV UK 2019',rank:'AWD',desc:'Recognised for innovation, safety and engineering excellence in accumulator design.',tags:['AWARD']},
+      {event:'Best Powertrain Design',location:'FSEV UK 2019',rank:'AWD',desc:'Awarded for performance, efficiency and integration of the electric drivetrain.',tags:['AWARD']}
+    ],awards:[]},
+  '2018': {
+    gallery:['assets/achievements/1803.jpg','assets/achievements/1802.JPG','assets/achievements/1804.jpg','assets/achievements/4217.jpg','assets/achievements/1801.jpg'],
+    results:[{event:'Formula Bharat',location:'Kari Motor Speedway - IN',rank:'3',desc:'A national podium and one of the team\'s strongest early results.',tags:['National Podium']},{event:'FSEV Cost Report',location:'Formula Bharat 2018',rank:'1',desc:'A standout cost-performance result.',tags:['Winners']},{event:'FSEV Business Plan',location:'Formula Bharat 2018',rank:'3',desc:'Strong commercial storytelling and presentation quality.',tags:['National Podium']}],awards:[]}
 };
 
 const sponsorData = [
   {tier:'Title Sponsor',title:'Powering The Mission',compact:false,items:[
-    {name:'Fabheads',logo:'assets/logos/logo-fabheads.png',body:'Composite manufacturing and advanced fabrication support.'},
-    {name:'Bender',logo:'assets/logos/logo-bender.png',body:'Electrical safety and insulation monitoring support for high-voltage systems.'}
+    {name:'VIT Vellore',logo:'assets/logos/vit.png',url:'https://vit.ac.in/',body:'Team partner and technical supporter.'},
+    {name:'Fabheads',logo:'assets/logos/fabheads.png',url:'https://fabheads.com/',body:'Composite manufacturing and advanced fabrication support.'},
+    {name:'Bender',logo:'assets/logos/bender.png',url:'https://www.bender.de/en/company/',body:'Electrical safety and insulation monitoring support for high-voltage systems.'}
   ]},
   {tier:'Gold Partners',title:'Engineering Enablers',compact:false,items:[
-    {name:'Dassault SolidWorks',logo:'assets/logos/logo-solidworks.png',body:'CAD platform for vehicle design and assembly workflows.'},
-    {name:'Ansys Inc.',logo:'assets/logos/logo-ansys.png',body:'Simulation support for CFD, FEA and design validation.'},
-    {name:'Nvidia',logo:'assets/logos/logo-nvidia.png',body:'Compute support for autonomous and perception systems.'},
-    {name:'MathWorks',logo:'assets/logos/logo-mathworks.png',body:'Modeling, controls and calculation workflows.'}
+    {name:'IMA',logo:'assets/logos/ima.png',url:'https://indianmotorsportsacademy.com/',body:'Engineering support for vehicle systems and embedded software.'},
+    {name:'Dassault SolidWorks',logo:'assets/logos/solidworks.png',url:'https://www.solidworks.com/',body:'CAD platform for vehicle design and assembly workflows.'},
+    {name:'Ansys Inc.',logo:'assets/logos/ansys.png',url:'https://www.ansys.com/',body:'Simulation support for CFD, FEA and design validation.'},
+    {name:'Nvidia',logo:'assets/logos/nvidia.png',url:'https://www.nvidia.com/',body:'Compute support for autonomous and perception systems.'},
+    {name:'MathWorks',logo:'assets/logos/mathworks.png',url:'https://www.mathworks.com/',body:'Modeling, controls and calculation workflows.'}
   ]},
   {tier:'Associates',title:'Supporting Cast',compact:true,items:[
-    {name:'HunterDouglas',logo:'assets/logos/logo-hunterdouglas.png',body:'Team partner and technical supporter.'},
-    {name:'Permabond',logo:'assets/logos/logo-permabond.png',body:'Team partner and technical supporter.'},
-    {name:'Novoflex',logo:'assets/logos/logo-novoflex.png',body:'Team partner and technical supporter.'},
-    {name:'SBG Systems',logo:'assets/logos/logo-sbgsystems.png',body:'Team partner and technical supporter.'},
-    {name:'Batemo',logo:'assets/logos/logo-batemo.png',body:'Team partner and technical supporter.'},
-    {name:'Electrifuel',logo:'assets/logos/logo-electrifuel.png',body:'Team partner and technical supporter.'},
-    {name:'IPG',logo:'assets/logos/logo-ipg.png',body:'Team partner and technical supporter.'},
-    {name:'Ramani',logo:'assets/logos/logo-ramani.png',body:'Team partner and technical supporter.'},
-    {name:'VIT Vellore',logo:'assets/logos/logo-vit.png',body:'Team partner and technical supporter.'}
+    {name:'HunterDouglas',logo:'assets/logos/hunterdouglas.png',url:'https://www.hunterdouglas.com/',body:'Team partner and technical supporter.'},
+    {name:'Novoflex',logo:'assets/logos/novoflex.png',url:'https://www.novoflex.com/',body:'Team partner and technical supporter.'},
+    {name:'SBG Systems',logo:'assets/logos/sbgsystems.png',url:'https://www.sbg-systems.com/',body:'Team partner and technical supporter.'},
+    {name:'Batemo',logo:'assets/logos/batemo.png',url:'https://www.batemo.com/',body:'Team partner and technical supporter.'},
+    {name:'Electrifuel',logo:'assets/logos/electrifuel.png',url:'https://electrifuel.com/',body:'Team partner and technical supporter.'},
+    {name:'IPG',logo:'assets/logos/ipg.png',url:'https://ipg-automotive.com/',body:'Team partner and technical supporter.'},
+    {name:'Simscale',logo:'assets/logos/simscale.png',url:'https://www.simscale.com/',body:'Team partner and technical supporter.'},
   ]}
 ];
 
@@ -249,6 +267,23 @@ function showPage(pageName){
   });
   closeMenu();
   window.scrollTo({top:0,behavior:'smooth'});
+
+  if(pageName === 'achievements'){
+    setTimeout(() => {
+      document.querySelectorAll('.year-sec').forEach(s => {
+        const rect = s.getBoundingClientRect();
+        if(rect.top < window.innerHeight) s.classList.add('visible');
+      });
+    }, 50);
+  }
+
+  if(pageName === 'sponsors'){
+    setTimeout(() => {
+      document.querySelectorAll('#sponsor-display .sponsor-card').forEach(c => {
+        c.classList.add('visible');
+      });
+    }, 50);
+  }
 }
 
 function closeMenu(){
@@ -408,47 +443,130 @@ function renderMember(member,year,key){
 }
 
 // ── ACHIEVEMENTS ────────────────────────────────────────────
-function renderAchTabs(active = '2025'){
-  const tabs = document.querySelector('#ach-tabs');
-  tabs.innerHTML = Object.keys(achData).map(year => `<button type="button" class="${year === active ? 'active' : ''}" data-ach-year="${year}">${year}</button>`).join('');
-  tabs.querySelectorAll('button').forEach(button => button.addEventListener('click', () => renderAchievements(button.dataset.achYear)));
+function renderAchievements(){
+  const years = ['2025','2024','2022','2021','2020','2019','2018'];
+  const nav = document.querySelector('#ach-timeline-nav');
+  const display = document.querySelector('#ach-display');
+
+  // Build sticky timeline nav
+  nav.innerHTML = years.map(yr => `
+    <a href="#ach-year-${yr}" class="timeline-link" data-year="${yr}">
+      <span class="timeline-dot"></span>
+      <span>${yr}</span>
+    </a>`).join('');
+
+  // Build all year sections
+  display.innerHTML = years.map(yr => {
+    const data = achData[yr];
+    const cards = data.results.map(r => `
+      <div class="ach-card" onclick="toggleAchCard(this)">
+        <div class="ach-card-inner">
+          <div class="ach-front">
+            <div class="ach-watermark">${r.rank}</div>
+            <div class="ach-card-title">${r.event}</div>
+            <div class="ach-rank">${r.rank}</div>
+            <div class="ach-rank-text">POSITION</div>
+          </div>
+          <div class="ach-back">
+            <div class="ach-back-title">${r.event}</div>
+            <div class="ach-back-desc">${r.desc}</div>
+          </div>
+        </div>
+      </div>`).join('');
+    const galleryHTML = data.gallery && data.gallery.length ? `
+      <div class="year-gallery">
+        <div class="gallery-track">
+          ${data.gallery.map((src,i) => `<div class="gallery-item ${i===0?'active':''}" ><img src="${src}" alt="" loading="lazy"></div>`).join('')}
+        </div>
+      </div>` : '';
+
+    return `
+      <section class="year-sec" id="ach-year-${yr}">
+        <div class="year-head">
+          <div class="year-num">${yr}</div>
+          <div class="year-sub">${data.results[0]?.location || ''}</div>
+        </div>
+        <div class="ach-cards ${data.results.length === 4 ? 'four-up' : ''}">${cards}</div>
+        ${galleryHTML}
+      </section>`;
+  }).join('');
+
+  // Scroll-spy to update active timeline link
+  const sections = display.querySelectorAll('.year-sec');
+  const links = nav.querySelectorAll('.timeline-link');
+  const yearObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        links.forEach(l => l.classList.remove('active'));
+        const match = nav.querySelector(`[data-year="${entry.target.id.replace('ach-year-','')}"]`);
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {threshold:.2});
+  sections.forEach(s => yearObs.observe(s));
+
+  // Gallery auto-rotate
+  display.querySelectorAll('.gallery-track').forEach(track => {
+    const items = track.querySelectorAll('.gallery-item');
+    let current = 0;
+    function activate(i){ items.forEach(item => item.classList.remove('active')); items[i].classList.add('active'); }
+    activate(0);
+    setInterval(() => { current = (current + 1) % items.length; activate(current); }, 3000);
+    items.forEach((item,i) => item.addEventListener('click', () => { current = i; activate(i); }));
+  });
+
+  // Set first link active and first section visible immediately
+  if(links[0]) links[0].classList.add('active');
+  if(sections[0]) sections[0].classList.add('visible');
+
+  // Re-observe after a tick to catch already-visible sections
+  setTimeout(() => {
+    sections.forEach(s => {
+      const rect = s.getBoundingClientRect();
+      if(rect.top < window.innerHeight) s.classList.add('visible');
+    });
+  }, 100);
 }
 
-function renderAchievements(year = '2025'){
-  renderAchTabs(year);
-  const data = achData[year];
-  const results = data.results.map(result => {
-    const rankClass = result.rank === '1' ? 'gold' : result.rank === '2' ? 'silver' : result.rank === '3' ? 'bronze' : '';
-    return `<article class="result-card"><div><h3>${result.event}</h3><small>${result.location}</small></div><div><p>${result.desc}</p><div class="tag-row">${result.tags.map(tag => `<span>${tag}</span>`).join('')}</div></div><div class="rank ${rankClass}">${result.rank}</div></article>`;
-  }).join('');
-  const awards = data.awards.length ? `<div class="award-grid">${data.awards.map((award,index) => `<article class="award-card"><b>0${index + 1}</b><h3>${award.title}</h3><p>${award.body}</p></article>`).join('')}</div>` : '<p class="empty-note">Awards and recognition for this season will be updated soon.</p>';
-  document.querySelector('#ach-display').innerHTML = `<p class="section-label">${year} Season Results</p>${results}<div class="awards-wrap"><p class="section-label">Awards and Recognition</p>${awards}</div>`;
+function toggleAchCard(card){
+  const open = document.querySelector('.ach-card.flipped');
+  if(open && open !== card) open.classList.remove('flipped');
+  card.classList.toggle('flipped');
 }
 
 // ── SPONSORS PAGE ────────────────────────────────────────────
 function renderSponsors(){
-  document.querySelector('#sponsor-display').innerHTML = sponsorData.map(tier => `
-    <section class="tier">
-      <div class="tier-head">
-        <span class="tier-label">${tier.tier}</span>
-        <h3>${tier.title}</h3>
+  const allSponsors = sponsorData.flatMap(tier => tier.items);
+  document.querySelector('#sponsor-display').innerHTML = allSponsors.map(item => `
+    <div class="sponsor-card" onclick="toggleSponsor(this)">
+      <div class="sponsor-card-inner">
+        <div class="sponsor-front">
+          <img src="${item.logo}" class="sponsor-logo" alt="${item.name}"
+               onerror="this.style.display='none'">
+          <a class="sponsor-tab" href="${item.url || '#'}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            <span>${item.name}</span>
+          </a>
+        </div>
+        <div class="sponsor-back">
+          <div class="sponsor-name">${item.name}</div>
+          <div class="sponsor-desc">${item.body}</div>
+        </div>
       </div>
-      <div class="sponsor-grid ${tier.compact ? 'compact' : ''}">
-        ${tier.items.map(item => `
-          <article class="sponsor-card">
-            <div class="logo-box">
-              <img src="${item.logo}" alt="${item.name} logo" loading="lazy"
-                   onerror="this.outerHTML='<span>${item.name}</span>'">
-            </div>
-            <div>
-              <h4>${item.name}</h4>
-              <p>${item.body}</p>
-            </div>
-          </article>
-        `).join('')}
-      </div>
-    </section>
-  `).join('');
+    </div>`).join('');
+
+  // Scroll-triggered tab reveal
+  const sponsorObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, {threshold:.35});
+  document.querySelectorAll('#sponsor-display .sponsor-card').forEach(c => sponsorObs.observe(c));
+}
+
+function toggleSponsor(card){
+  const open = document.querySelector('#sponsor-display .sponsor-card.flipped');
+  if(open && open !== card) open.classList.remove('flipped');
+  card.classList.toggle('flipped');
 }
 
 // ── SPONSOR CAROUSEL ─────────────────────────────────────────
