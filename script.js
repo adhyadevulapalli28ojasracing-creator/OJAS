@@ -474,6 +474,8 @@ function setupCarousel(){
     { name:'IPG',           logo:'assets/logos/ipg.png',           url:'https://ipg-automotive.com/' },
     { name:'Ramani',        logo:'assets/logos/ramani.png',        url:'https://www.ramani.com/' },
     { name:'VIT Vellore',   logo:'assets/logos/vit.png',           url:'https://vit.ac.in/' },
+    { name:'Simscale',      logo:'assets/logos/simscale.png',      url:'https://www.simscale.com/' },
+
   ];
 
   const renderSet = (hidden) => sponsors.map(s =>
