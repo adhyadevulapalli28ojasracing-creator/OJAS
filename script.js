@@ -1,5 +1,7 @@
 const pages = document.querySelectorAll('.page');
 const navButtons = document.querySelectorAll('[data-page]');
+let teamRendered = false;
+let achievementsRendered = false;
 const navLinks = document.querySelectorAll('.nav-link');
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('#mobile-menu');
@@ -268,7 +270,22 @@ function showPage(pageName){
   closeMenu();
   window.scrollTo({top:0,behavior:'smooth'});
 
+  if(window.location.hash !== `#${pageName}`){
+    history.pushState({page:pageName}, '', `#${pageName}`);
+  }
+
+ if(pageName === 'team'){
+    if(!teamRendered){
+      renderTeam('2026', true);
+      teamRendered = true;
+    }
+  }
+
   if(pageName === 'achievements'){
+    if(!achievementsRendered){
+      renderAchievements();
+      achievementsRendered = true;
+    }
     setTimeout(() => {
       document.querySelectorAll('.year-sec').forEach(s => {
         const rect = s.getBoundingClientRect();
@@ -353,18 +370,17 @@ function paintCarDisplay(year){
 
 function renderCars(activeYear = carData[0].year){
   const rail = document.querySelector('#car-years');
-  rail.innerHTML = carData.map(car => `<button class="year-button ${car.year === activeYear ? 'active' : ''}" type="button" data-year="${car.year}">${car.year}</button>`).join('');
+  rail.innerHTML = carData.map(car =>
+    `<button class="year-button ${car.year === activeYear ? 'active' : ''}" type="button" data-year="${car.year}">${car.year}</button>`
+  ).join('');
   paintCarDisplay(activeYear);
 
-  const buttons = rail.querySelectorAll('button');
-  buttons.forEach(button => {
-    button.addEventListener('mouseenter', () => paintCarDisplay(button.dataset.year));
-    button.addEventListener('mouseleave', () => {
-      const pinned = rail.querySelector('.year-button.active');
-      paintCarDisplay(pinned ? pinned.dataset.year : activeYear);
+  rail.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click', () => {
+      rail.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+      button.classList.add('active');
+      paintCarDisplay(button.dataset.year);
     });
-    button.addEventListener('click', () => renderCars(button.dataset.year));
-    button.addEventListener('focus', () => paintCarDisplay(button.dataset.year));
   });
 }
 
@@ -389,6 +405,7 @@ function renderTeam(year = '2026', skipAnimation = false){
   const heroP = document.querySelector('#hero-people');
   const heroD = document.querySelector('#hero-depts');
   const heroL = document.querySelector('#hero-leads');
+  
   function animateCount(el, target){
     const steps=40; let step=0;
     el.textContent='0';
@@ -402,40 +419,36 @@ function renderTeam(year = '2026', skipAnimation = false){
     setTimeout(()=>{el.style.transition='transform 1s ease-out';el.style.transform='translateX(200%)';},i*150);
   });
   const display = document.querySelector('#team-display');
-  const delay = skipAnimation ? 0 : 300;
-  if (!skipAnimation) {
-    display.classList.add('animating');
-    display.classList.add('slide-out');
-  }
+
+  display.style.opacity = '0';
+  display.style.transition = 'opacity 0.25s ease';
 
   setTimeout(() => {
     const data = teamData[year];
     const groups = Object.entries(data);
-    const members = groups.flatMap(([,list]) => list);
-    const leads = members.filter(member => isLead(member.role,'')).length;
-    const sections = groups.map(([key,list]) => `<section class="department"><div class="department-head"><h3>${deptNames[key] || key}</h3><small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small></div><div class="member-grid">${list.map(member => renderMember(member,year,key)).join('')}</div></section>`).join('');
+
+    const sections = groups.map(([key, list]) =>
+      `<section class="department">
+        <div class="department-head">
+          <h3>${deptNames[key] || key}</h3>
+          <small>${list.length} ${list.length === 1 ? 'member' : 'members'}</small>
+        </div>
+        <div class="member-grid">
+          ${list.map(member => renderMember(member, year, key)).join('')}
+        </div>
+      </section>`
+    ).join('');
+
     display.innerHTML = sections;
 
-    // Clean up animation state
-    display.style.transition = '';
-    display.style.transform = '';
-    display.style.opacity = '';
-    display.classList.remove('slide-out', 'animating');
+    requestAnimationFrame(() => {
+      display.style.opacity = '1';
+    });
 
-    if (!skipAnimation) {
-      display.style.transform = 'translateX(-24px)';
-      display.style.opacity = '0';
-      display.offsetHeight; // force reflow
-      requestAnimationFrame(() => {
-        display.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        display.style.transform = '';
-        display.style.opacity = '';
-      });
-    }
-
-    setTimeout(runCountUp, skipAnimation ? 0 : 400);
-  }, skipAnimation ? 0 : 300);
+    setTimeout(runCountUp, 300);
+  }, skipAnimation ? 0 : 250);
 }
+
 
 function renderMember(member,year,key){
   const lead = isLead(member.role,key);
@@ -443,19 +456,26 @@ function renderMember(member,year,key){
 }
 
 // ── ACHIEVEMENTS ────────────────────────────────────────────
+let achObservers = [];
+let achIntervals = [];
+
 function renderAchievements(){
+  // Clear previous observers and intervals
+  achObservers.forEach(o => o.disconnect());
+  achObservers = [];
+  achIntervals.forEach(id => clearInterval(id));
+  achIntervals = [];
+
   const years = ['2025','2024','2022','2021','2020','2019','2018'];
   const nav = document.querySelector('#ach-timeline-nav');
   const display = document.querySelector('#ach-display');
 
-  // Build sticky timeline nav
   nav.innerHTML = years.map(yr => `
     <a href="#ach-year-${yr}" class="timeline-link" data-year="${yr}">
       <span class="timeline-dot"></span>
       <span>${yr}</span>
     </a>`).join('');
 
-  // Build all year sections
   display.innerHTML = years.map(yr => {
     const data = achData[yr];
     const cards = data.results.map(r => `
@@ -466,6 +486,7 @@ function renderAchievements(){
             <div class="ach-card-title">${r.event}</div>
             <div class="ach-rank">${r.rank}</div>
             <div class="ach-rank-text">POSITION</div>
+            <div class="ach-flip-hint">tap for details</div>
           </div>
           <div class="ach-back">
             <div class="ach-back-title">${r.event}</div>
@@ -491,35 +512,37 @@ function renderAchievements(){
       </section>`;
   }).join('');
 
-  // Scroll-spy to update active timeline link
   const sections = display.querySelectorAll('.year-sec');
   const links = nav.querySelectorAll('.timeline-link');
+
   const yearObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if(entry.isIntersecting){
         links.forEach(l => l.classList.remove('active'));
         const match = nav.querySelector(`[data-year="${entry.target.id.replace('ach-year-','')}"]`);
         if(match) match.classList.add('active');
+        entry.target.classList.add('visible');
+        yearObs.unobserve(entry.target); // stop watching once visible
       }
     });
   }, {threshold:.2});
-  sections.forEach(s => yearObs.observe(s));
 
-  // Gallery auto-rotate
+  sections.forEach(s => yearObs.observe(s));
+  achObservers.push(yearObs);
+
   display.querySelectorAll('.gallery-track').forEach(track => {
     const items = track.querySelectorAll('.gallery-item');
     let current = 0;
     function activate(i){ items.forEach(item => item.classList.remove('active')); items[i].classList.add('active'); }
     activate(0);
-    setInterval(() => { current = (current + 1) % items.length; activate(current); }, 3000);
+    const id = setInterval(() => { current = (current + 1) % items.length; activate(current); }, 3000);
+    achIntervals.push(id); // store so we can clear it
     items.forEach((item,i) => item.addEventListener('click', () => { current = i; activate(i); }));
   });
 
-  // Set first link active and first section visible immediately
   if(links[0]) links[0].classList.add('active');
   if(sections[0]) sections[0].classList.add('visible');
 
-  // Re-observe after a tick to catch already-visible sections
   setTimeout(() => {
     sections.forEach(s => {
       const rect = s.getBoundingClientRect();
@@ -679,18 +702,7 @@ function setupTimelineAnimation(){
 
 // ── COUNT UP ─────────────────────────────────────────────────
 function runCountUp(){
-  document.querySelectorAll('.count').forEach(el => {
-    const target = parseInt(el.dataset.target);
-    const steps = 40;
-    let step = 0;
-    el.textContent = '0';
-    const t = setInterval(() => {
-      step++;
-      el.textContent = Math.min(Math.round((target/steps)*step), target);
-      if(step >= steps) clearInterval(t);
-    }, 1200/steps);
-  });
-  document.querySelectorAll('.team-stats .scan').forEach((el,i) => {
+  document.querySelectorAll('.team-hero-stats .scan').forEach((el,i) => {
     el.style.transition = 'none';
     el.style.transform = 'translateX(-100%)';
     setTimeout(() => {
@@ -715,14 +727,20 @@ function setupZZLabels(){
 
 // ── INIT ─────────────────────────────────────────────────────
 setupNavigation();
+window.addEventListener('popstate', (e) => {
+  const page = e.state?.page || 'home';
+  showPage(page);
+});
+
+const initialPage = window.location.hash.replace('#', '') || 'home';
+const validPages = ['home','about','cars','team','achievements','sponsors'];
+showPage(validPages.includes(initialPage) ? initialPage : 'home');
 setupHeaderScroll();
 setupCursor();
 setupReveal();
 setupTimelineAnimation();
 setupZZLabels();
 renderCars();
-renderTeam('2026', true);
-renderAchievements();
 renderSponsors();
 setupCarousel();
 

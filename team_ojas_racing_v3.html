@@ -7,6 +7,7 @@
   <title>Team Ojas Racing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="fonts/SofachromeIt.otf" as="font" type="font/otf" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -49,7 +50,12 @@
       <header class="hero section-shell">
         <div class="hero-grid" aria-hidden="true"></div>
         <div class="hero-scan" aria-hidden="true"></div>
-        <img class="hero-car" src="assets/rolling.jpg" alt="Team Ojas Racing electric formula car on track">
+     <img class="hero-car"
+     src="assets/rolling.jpg"
+     alt="Team Ojas Racing electric formula car on track"
+     width="1440" height="900"
+     fetchpriority="high">
+     fetchpriority="high">
         <div class="hero-copy reveal visible">
           <p class="eyebrow">Formula Student Electric - VIT Vellore</p>
           <h1>The Future<br><span>Is Here.</span></h1>
@@ -258,8 +264,8 @@
         <h2 class="section-title">Partner With Us</h2>
         <p>Put your brand alongside EV engineering, international competition exposure and future automotive talent.</p>
         <div class="sponsor-cta-actions">
-          <button class="btn primary" type="button">Request Sponsor Deck</button>
-          <button class="btn ghost" type="button">Contact The Team</button>
+          <button class="btn primary" type="button" onclick="window.location.href='assets/sponsor-deck.pdf'">Request Sponsor Deck</button>
+<button class="btn ghost" type="button" onclick="window.location.href='mailto:teamojasracing@vit.ac.in'">Contact The Team</button>
         </div>
       </div>
     </div>
@@ -312,6 +318,6 @@
   </footer>
 
   
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
