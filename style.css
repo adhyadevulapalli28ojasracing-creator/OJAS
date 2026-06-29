@@ -286,17 +286,16 @@ main{padding-top:68px}.page{display:none;min-height:calc(100vh - 68px)}.page.act
 }
 
 /* ── ACHIEVEMENTS V2 ── */
-.ach-hero{position:relative;padding:120px 64px 60px;overflow:hidden}
-.ach-hero .ach-title{font-size:130px;line-height:.86;position:relative;z-index:2}
-.ach-hero .section-label,.ach-hero .sec-lbl{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px}
-.ach-hero .sec-lbl::before{content:'';width:28px;height:1px;background:var(--gold)}
-.ach-hero .ach-title{font-family:'Barlow Condensed',sans-serif;font-size:92px;line-height:.88;font-weight:900;color:var(--white);text-transform:uppercase}
-.ach-hero .ach-title span{color:var(--gold)}
+.ach-hero{position:relative;min-height:480px;padding:70px 64px 50px;display:flex;align-items:center;overflow:hidden;background:var(--black);width:100%}
+.ach-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,var(--black));pointer-events:none;z-index:1}
+.ach-hero-wm-left{position:absolute;left:20px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(110px,12vw,170px);color:rgba(199,166,75,.055);line-height:1;letter-spacing:-.04em;pointer-events:none}
+.ach-hero-wm-right{position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(110px,12vw,170px);color:rgba(199,166,75,.055);line-height:1;letter-spacing:-.04em;pointer-events:none}
+.ach-hero-inner{position:relative;z-index:4;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center}
+.ach-hero .section-label,.ach-hero .sec-lbl{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--gold);letter-spacing:.28em;text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:12px;justify-content:center}
+.ach-hero .ach-title{font-family:'Barlow Condensed',sans-serif;font-size:clamp(58px,8.5vw,109px);line-height:.88;font-weight:900;color:var(--white);text-transform:uppercase;position:relative;z-index:2;margin-top:12px}
 .ach-title span{color:var(--gold)}
-.ach-hero-bg{position:absolute;inset:0;display:flex;justify-content:flex-end;align-items:center;pointer-events:none}
-.ach-hero-bg img{width:900px;max-width:70vw;opacity:.6;mask-image:linear-gradient(to left,rgba(0,0,0,1) 45%,rgba(0,0,0,.4) 75%,transparent 100%);-webkit-mask-image:linear-gradient(to left,rgba(0,0,0,1) 45%,rgba(0,0,0,.4) 75%,transparent 100%)}
 .ach-layout{display:grid;grid-template-columns:220px 1fr;gap:60px;padding:0 64px 120px;position:relative}
-.ach-timeline{position:sticky;top:110px;height:max-content;display:flex;flex-direction:column;gap:18px;padding-left:12px}
+.ach-timeline{position:sticky;top:200px;height:max-content;display:flex;flex-direction:column;gap:18px;padding-left:12px}
 .ach-timeline::before{content:'';position:absolute;left:16px;top:8px;bottom:8px;width:1px;background:rgba(255,255,255,.12)}
 .timeline-link{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:.08em;transition:.35s;position:relative;z-index:2;opacity:.45}
 .timeline-dot{width:10px;height:10px;border-radius:50%;background:#444;transition:.35s}
