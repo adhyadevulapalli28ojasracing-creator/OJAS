@@ -663,6 +663,27 @@ function setupHeaderScroll(){
   }, {passive: true});
 }
 
+function setupHeroParallax(){
+  const heroCar = document.querySelector('.hero-car');
+  const heroCopy = document.querySelector('.hero-copy');
+  if(!heroCar) return;
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const scale = 1 + scrollY / 4000;
+        heroCar.style.transform = `translateY(${scrollY * 0.25}px) scale(${scale})`;
+        if(heroCopy) heroCopy.style.transform = `translateY(${scrollY * 0.08}px)`;
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, {passive: true});
+}
+
 // ── CUSTOM CURSOR ────────────────────────────────────────────
 function setupCursor(){
   if (matchMedia('(pointer: coarse)').matches) return;
@@ -743,7 +764,32 @@ setupZZLabels();
 renderCars();
 renderSponsors();
 setupCarousel();
+function animateTelemetry(){
+  const panels = document.querySelectorAll('.telemetry-panel b');
+  const targets = [
+    {el: panels[1], from: 0, to: 80,  suffix: ' kW', decimals: 0},
+    {el: panels[2], from: 0, to: 3.6, suffix: ' s',  decimals: 1},
+  ];
 
+  targets.forEach((item, i) => {
+    setTimeout(() => {
+      const steps = 40;
+      let step = 0;
+      const interval = setInterval(() => {
+        step++;
+        const value = (item.to / steps) * step;
+        item.el.textContent = value.toFixed(item.decimals) + item.suffix;
+        if(step >= steps){
+          clearInterval(interval);
+          item.el.textContent = item.to.toFixed(item.decimals) + item.suffix;
+        }
+      }, 800 / steps);
+    }, i * 200);
+  });
+}
+
+animateTelemetry();
+setupHeroParallax();
 // Trigger countup when team tab is clicked from another page
 document.querySelectorAll('[data-page]').forEach(btn => {
   if(btn.dataset.page === 'team') btn.addEventListener('click', () => setTimeout(runCountUp, 400));
