@@ -471,7 +471,7 @@ function renderAchievements(){
   const display = document.querySelector('#ach-display');
 
   nav.innerHTML = years.map(yr => `
-    <a href="#ach-year-${yr}" class="timeline-link" data-year="${yr}">
+    <a href="#achievements" class="timeline-link" data-year="${yr}" onclick="event.preventDefault(); document.getElementById('ach-year-${yr}').scrollIntoView({behavior:'smooth'})">
       <span class="timeline-dot"></span>
       <span>${yr}</span>
     </a>`).join('');
@@ -531,13 +531,38 @@ function renderAchievements(){
   achObservers.push(yearObs);
 
   display.querySelectorAll('.gallery-track').forEach(track => {
-    const items = track.querySelectorAll('.gallery-item');
+    const items = Array.from(track.querySelectorAll('.gallery-item'));
+    if(items.length < 2) return;
     let current = 0;
-    function activate(i){ items.forEach(item => item.classList.remove('active')); items[i].classList.add('active'); }
+    let intervalId = null;
+
+    function activate(i){
+      current = ((i % items.length) + items.length) % items.length;
+      items.forEach((item, idx) => {
+        item.classList.remove('active');
+        if(idx === current) item.classList.add('active');
+      });
+    }
+
+    function startInterval(){
+      if(intervalId){
+        clearInterval(intervalId);
+        const idx = achIntervals.indexOf(intervalId);
+        if(idx > -1) achIntervals.splice(idx, 1);
+      }
+      intervalId = setInterval(() => {
+        activate(current + 1);
+      }, 3500);
+      achIntervals.push(intervalId);
+    }
+
     activate(0);
-    const id = setInterval(() => { current = (current + 1) % items.length; activate(current); }, 3000);
-    achIntervals.push(id); // store so we can clear it
-    items.forEach((item,i) => item.addEventListener('click', () => { current = i; activate(i); }));
+    startInterval();
+
+    items.forEach((item, i) => item.addEventListener('click', () => {
+      activate(i);
+      startInterval();
+    }));
   });
 
   if(links[0]) links[0].classList.add('active');
