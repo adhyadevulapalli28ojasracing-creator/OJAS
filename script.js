@@ -89,9 +89,9 @@ const teamData = {
       {name:'Sushanth Bibi',role:'Drivetrain Engineer',init:'SB',photo:'assets/team/2026/sushanth-bibi.jpg'}
     ],
     aero: [
-      {name:'Yash Mangatt',role:'Aero and Composites Lead',init:'YM',tag:'LEAD',photo:'assets/team/2026/yash-mangatt.jpg'},
-      {name:'Siddhartha Verma',role:'Aero and Composites Engineer',init:'SV',photo:'assets/team/2026/siddhartha-verma.jpg'},
-      {name:'Arjun Srikanth',role:'Aero and Composites Engineer',init:'AS',photo:'assets/team/2026/arjun-srikanth.jpg'}
+      {name:'Yash Mangatt',role:'Aerodynamics, Composites & Cooling Lead',init:'YM',tag:'LEAD',photo:'assets/team/2026/yash-mangatt.jpg'},
+      {name:'Siddhartha Verma',role:'Aerodynamics, Composites & Cooling Engineer',init:'SV',photo:'assets/team/2026/siddhartha-verma.jpg'},
+      {name:'Arjun Srikanth',role:'Aerodynamics, Composites & Cooling Engineer',init:'AS',photo:'assets/team/2026/arjun-srikanth.jpg'}
     ],
     chassis: [
       {name:'Varun S',role:'Design Lead',init:'VS',tag:'LEAD',photo:'assets/team/2026/varun-sekaran.jpg'},
@@ -123,14 +123,13 @@ const teamData = {
       {name:'Sushanth Bibi',role:'Operations Member',init:'SB',photo:'assets/team/2026/sushanth-bibi.jpg'},
       {name:'Tejashri Krishnakumar',role:'Operations Member',init:'TK',photo:'assets/team/2026/tejashri-krishnakumar.jpg'},
       {name:'Tanushree Paidi',role:'Operations Member',init:'TP',photo:'assets/team/2026/tanushree-paidi.jpg'},
-      {name:'Naval Aggarwal',role:'Operations Member',init:'NA',photo:'assets/team/2026/naval-aggarwal.jpg'}
+      {name:'Naval Agarwal',role:'Operations Member',init:'NA',photo:'assets/team/2026/naval-aggarwal.jpg'}
     ],
     auto: [
-      {name:'Veekshith Gali',role:'Path Planning Lead',init:'VG',tag:'LEAD',photo:'assets/team/2026/veekshith-gali.jpg'},
       {name:'Suren Elango',role:'Perception Lead',init:'SE',tag:'LEAD',photo:'assets/team/2026/suren-elango.jpg'},
+      {name:'Veekshith Gali',role:'Path Planning Lead',init:'VG',tag:'LEAD',photo:'assets/team/2026/veekshith-gali.jpg'},
       {name:'Krish Gupta',role:'Autonomous Engineer',init:'KG',photo:'assets/team/2026/krish-gupta.jpg'},
-      {name:'Naval Aggarwal',role:'Autonomous Engineer',init:'NA',photo:'assets/team/2026/naval-aggarwal.jpg'},
-      {name:'Krishna Kotikalapudi',role:'Autonomous Engineer',init:'KK',photo:'assets/team/2026/krishna-kotikalapudi.jpg'},
+      {name:'Naval Agarwal',role:'Autonomous Engineer',init:'NA',photo:'assets/team/2026/naval-aggarwal.jpg'},
       {name:'Sabharish Balaji',role:'Autonomous Engineer',init:'SB',photo:'assets/team/2026/sabharish-balaji.jpg'},
       {name:'Raajvardhan Singh',role:'Autonomous Engineer',init:'RS',photo:'assets/team/2026/raajvardhan-singh.jpg'}
     ]
@@ -205,7 +204,7 @@ const teamData = {
   }
 };
 
-const deptNames = {leadership:'Team Leadership',pe:'Principal Engineers',powertrain:'Powertrain',aero:'Aerodynamics and Composites',chassis:'Chassis and Design',vd:'Vehicle Dynamics and Brakes',electronics:'Electrical and Software',ops:'Operations',auto:'Autonomous',departmentHeads: 'Department Heads'};
+const deptNames = {leadership:'Team Leadership',pe:'Principal Engineers',powertrain:'Powertrain',aero:'Aerodynamics, Composites & Cooling',chassis:'Chassis and Design',vd:'Vehicle Dynamics and Brakes',electronics:'Electrical and Software',ops:'Operations',auto:'Autonomous',departmentHeads: 'Department Heads'};
 
 const achData = {
   '2025': {
@@ -711,6 +710,7 @@ function setupHeroParallax(){
 
 // ── CUSTOM CURSOR ────────────────────────────────────────────
 function setupCursor(){
+  console.log('pointer coarse?', matchMedia('(pointer: coarse)').matches);
   if (matchMedia('(pointer: coarse)').matches) return;
   document.addEventListener('mousemove', event => {
     cursorDot.style.left = `${event.clientX}px`;
