@@ -392,7 +392,7 @@ function setupNavigation(){
 
 // ── CAR LINEUP ──────────────────────────────────────────────
 function formatCarName(name){
-  const match = name.match(/^(TOR-)(.+)$/);
+  const match = name.match(/^(.*TOR-)(\d+)$/);
   return match ? `${match[1]}<span>${match[2]}</span>` : name;
 }
 
@@ -653,8 +653,15 @@ function renderAchievements(){
     }
   }
 
-  window.addEventListener("scroll", updateTimeline);
-  window.addEventListener("resize", updateTimeline);
+  let achScrollTicking = false;
+  function onAchScroll(){
+    if(!achScrollTicking){
+      requestAnimationFrame(() => { updateTimeline(); achScrollTicking = false; });
+      achScrollTicking = true;
+    }
+  }
+  window.addEventListener("scroll", onAchScroll, {passive:true});
+  window.addEventListener("resize", onAchScroll);
   updateTimeline();
 
   display.querySelectorAll('.gallery-track').forEach(track => {
@@ -671,12 +678,17 @@ function renderAchievements(){
       });
     }
 
-    function startInterval(){
+    function stopInterval(){
       if(intervalId){
         clearInterval(intervalId);
         const idx = achIntervals.indexOf(intervalId);
         if(idx > -1) achIntervals.splice(idx, 1);
+        intervalId = null;
       }
+    }
+
+    function startInterval(){
+      stopInterval();
       intervalId = setInterval(() => {
         activate(current + 1);
       }, 3500);
@@ -684,7 +696,15 @@ function renderAchievements(){
     }
 
     activate(0);
-    startInterval();
+
+    const galleryObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) startInterval();
+        else stopInterval();
+      });
+    }, {threshold:.3});
+    galleryObserver.observe(track);
+    achObservers.push(galleryObserver);
 
     items.forEach((item, i) => item.addEventListener('click', () => {
       activate(i);
