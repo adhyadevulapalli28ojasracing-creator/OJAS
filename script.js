@@ -2,13 +2,13 @@ const pages = document.querySelectorAll('.page');
 const navButtons = document.querySelectorAll('[data-page]');
 let teamRendered = false;
 let achievementsRendered = false;
+let carsRendered = false;
 const navLinks = document.querySelectorAll('.nav-link');
 const menuToggle = document.querySelector('.menu-toggle');
 const mobileMenu = document.querySelector('#mobile-menu');
 const cursorDot = document.querySelector('#cursor-dot');
 const cursorRing = document.querySelector('#cursor-ring');
 
-// High Quality Stock References for Gallery representation
 const stockGallery = [
   'https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?q=80&w=1200&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1548611716-e5b128527a20?q=80&w=1200&auto=format&fit=crop',
@@ -16,7 +16,6 @@ const stockGallery = [
   'https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?q=80&w=1200&auto=format&fit=crop'
 ];
 
-// TO — give each car its own gallery array
 const tor24Gallery = [
   'assets/cars/tor24-1.png',
   'assets/cars/tor24-2.png',
@@ -64,8 +63,8 @@ const carData = [
   {year:'2020',season:'Season 8',name:'TOR-20',image:'assets/tor-20-render.png', gallery: tor20Gallery, desc:'A major step forward with full aero development, improved powertrain packaging and stronger validation workflows.',specs:{'Peak Power':'72 kW','0-100 km/h':'4.8 s','Accumulator':'5.8 kWh','Mass':'252 kg'}},
   {year:'2018',season:'Season 7',name:'TOR-18',image:'assets/tor-18.webp', gallery: tor18Gallery, desc:'A pre-pandemic benchmark generation focused on manufacturing maturity, race reliability and stronger static event preparation.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.6 s','Accumulator':'5.0 kWh','Mass':'268 kg'}},
   {year:'2017',season:'Season 6',name:'TOR-17',image:'assets/tor-17-render.png', gallery: tor17Gallery, desc:'An important design iteration that helped mature the team architecture, testing discipline and subsystem ownership.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.7 s','Accumulator':'5.0 kWh','Mass':'270 kg'}},
-  {year:'2016',season:'Season 5',name:'TOR-16',image:'assets/tor-16.png', gallery: tor16Gallery, desc:'A foundational competitive car that strengthened the team culture and set the direction for future electric race builds.',specs:{'Peak Power':'55 kW','0-100 km/h':'5.9 s','Accumulator':'4.8 kWh','Mass':'272 kg'}},
-  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-18-render.png', gallery: originGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}} 
+  {year:'2016',season:'Season 5',name:'TOR-16',image:'assets/tor-16.jpg', gallery: tor16Gallery, desc:'A foundational competitive car that strengthened the team culture and set the direction for future electric race builds.',specs:{'Peak Power':'55 kW','0-100 km/h':'5.9 s','Accumulator':'4.8 kWh','Mass':'272 kg'}},
+  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-15.png', gallery: originGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}} 
 ];
  
 const teamData = {
@@ -326,11 +325,24 @@ function showPage(pageName){
     history.pushState({page:pageName}, '', `#${pageName}`);
   }
 
- if(pageName === 'team'){
+  if(pageName === 'team'){
     if(!teamRendered){
       renderTeam('2026', true);
       teamRendered = true;
     }
+  }
+
+  if(pageName === 'cars'){
+    if(!carsRendered){
+      renderCars();
+      carsRendered = true;
+    }
+    setTimeout(() => {
+      document.querySelectorAll('.car-year-sec').forEach(s => {
+        const rect = s.getBoundingClientRect();
+        if(rect.top < window.innerHeight) s.classList.add('visible');
+      });
+    }, 50);
   }
 
   if(pageName === 'achievements'){
@@ -362,7 +374,6 @@ function closeMenu(){
 }
 
 function setupNavigation(){
-  // nav buttons and feature cards both navigate
   document.querySelectorAll('[data-page]').forEach(el => {
     el.addEventListener('click', () => showPage(el.dataset.page));
   });
@@ -374,7 +385,6 @@ function setupNavigation(){
     menuToggle.setAttribute('aria-expanded', String(open));
   });
 
-  // Close mobile menu on outside click
   document.addEventListener('click', e => {
     if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) closeMenu();
   });
@@ -386,54 +396,92 @@ function formatCarName(name){
   return match ? `${match[1]}<span>${match[2]}</span>` : name;
 }
 
-function paintCarDisplay(year){
+function renderCars(){
+  const nav = document.querySelector('#car-timeline-nav');
   const display = document.querySelector('#car-display');
-  const galleryDisplay = document.querySelector('#car-gallery-display');
-  const car = carData.find(item => item.year === year) || carData[0];
 
-  const galleryHTML = `
-    <div class="accordion-gallery" aria-label="Image gallery for ${car.name}">
-      ${car.gallery.map((img, i) => `
-        <div class="accordion-panel ${i === 0 ? 'active' : ''}" onclick="this.parentElement.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('active')); this.classList.add('active');">
-          <img src="${img}" alt="${car.name} detail view ${i+1}" loading="lazy">
-    
-        </div>
-      `).join('')}
-    </div>
-  `;
+  nav.innerHTML = carData.map(car => `
+    <a href="#cars" class="timeline-link car-timeline-link" data-year="${car.year}" onclick="event.preventDefault(); document.getElementById('car-year-${car.year}').scrollIntoView({behavior:'smooth'})">
+      <span class="timeline-dot"></span>
+      <span>${car.year}</span>
+    </a>`).join('');
 
-  display.innerHTML = `
-    <article class="car-info">
-      <span class="car-badge">${car.season}</span>
-      <h2 class="car-name">${formatCarName(car.name)}</h2>
-      <p>${car.desc}</p>
-      <div class="spec-grid">
-        ${Object.entries(car.specs).map(([k,v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}
+  display.innerHTML = carData.map(car => {
+    const galleryHTML = `
+      <div class="accordion-gallery" aria-label="Image gallery for ${car.name}">
+        ${car.gallery.map((img, i) => `
+          <div class="accordion-panel ${i === 0 ? 'active' : ''}" onclick="this.parentElement.querySelectorAll('.accordion-panel').forEach(p => p.classList.remove('active')); this.classList.add('active');">
+            <img src="${img}" alt="${car.name} detail view ${i+1}" loading="lazy">
+          </div>
+        `).join('')}
       </div>
-    </article>
-    <figure class="car-visual">
-      <span class="callout">${car.name} - ${car.year}</span>
-      <img src="${car.image}" alt="${car.name}">
-    </figure>
-  `;
+    `;
 
-  galleryDisplay.innerHTML = galleryHTML;
-}
+    return `
+      <section class="year-sec car-year-sec" id="car-year-${car.year}">
+        <div class="year-head">
+          <div class="year-num">${car.year}</div>
+          <div class="year-sub">${car.season}</div>
+        </div>
+        <div class="car-showcase" style="margin-bottom: 24px;">
+          <article class="car-info">
+            <span class="car-badge">${car.season}</span>
+            <h2 class="car-name">${formatCarName(car.name)}</h2>
+            <p>${car.desc}</p>
+            <div class="spec-grid">
+              ${Object.entries(car.specs).map(([k,v]) => `<div><span>${k}</span><b>${v}</b></div>`).join('')}
+            </div>
+          </article>
+          <figure class="car-visual">
+            <span class="callout">${car.name} - ${car.year}</span>
+            <img src="${car.image}" alt="${car.name}">
+          </figure>
+        </div>
+        ${galleryHTML}
+      </section>`;
+  }).join('');
 
-function renderCars(activeYear = carData[0].year){
-  const rail = document.querySelector('#car-years');
-  rail.innerHTML = carData.map(car =>
-    `<button class="year-button ${car.year === activeYear ? 'active' : ''}" type="button" data-year="${car.year}">${car.year}</button>`
-  ).join('');
-  paintCarDisplay(activeYear);
+  const sections = display.querySelectorAll('.car-year-sec');
+  const links = nav.querySelectorAll('.car-timeline-link');
 
-  rail.querySelectorAll('button').forEach(button => {
-    button.addEventListener('click', () => {
-      rail.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-      button.classList.add('active');
-      paintCarDisplay(button.dataset.year);
+  function updateCarTimeline() {
+    if(document.getElementById('page-cars').classList.contains('active')){
+      let activeSection = sections[0];
+      let smallestDistance = Infinity;
+
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        
+        if (rect.top < window.innerHeight * 0.85) {
+          section.classList.add("visible");
+        }
+
+        const distance = Math.abs(rect.top - 120);
+        if (rect.top <= 120 && distance < smallestDistance) {
+          smallestDistance = distance;
+          activeSection = section;
+        }
+      });
+
+      links.forEach(link => link.classList.remove("active"));
+      if(activeSection) {
+        const year = activeSection.id.replace("car-year-", "");
+        const activeLink = nav.querySelector(`[data-year="${year}"]`);
+        if (activeLink) activeLink.classList.add("active");
+      }
+    }
+  }
+
+  window.addEventListener("scroll", updateCarTimeline);
+  window.addEventListener("resize", updateCarTimeline);
+  updateCarTimeline();
+
+  setTimeout(() => {
+    sections.forEach(s => {
+      const rect = s.getBoundingClientRect();
+      if(rect.top < window.innerHeight) s.classList.add('visible');
     });
-  });
+  }, 100);
 }
 
 // ── TEAM ────────────────────────────────────────────────────
@@ -512,7 +560,6 @@ let achObservers = [];
 let achIntervals = [];
 
 function renderAchievements(){
-  // Clear previous observers and intervals
   achObservers.forEach(o => o.disconnect());
   achObservers = [];
   achIntervals.forEach(id => clearInterval(id));
@@ -581,38 +628,34 @@ function renderAchievements(){
   const links = nav.querySelectorAll('.timeline-link');
 
   function updateTimeline() {
-  let activeSection = sections[0];
-  let smallestDistance = Infinity;
+    if(document.getElementById('page-achievements').classList.contains('active')){
+      let activeSection = sections[0];
+      let smallestDistance = Infinity;
 
-  sections.forEach(section => {
-    const rect = section.getBoundingClientRect();
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          section.classList.add("visible");
+        }
+        const distance = Math.abs(rect.top - 120);
+        if (rect.top <= 120 && distance < smallestDistance) {
+          smallestDistance = distance;
+          activeSection = section;
+        }
+      });
 
-    // reveal animation
-    if (rect.top < window.innerHeight * 0.85) {
-      section.classList.add("visible");
+      links.forEach(link => link.classList.remove("active"));
+      if(activeSection) {
+        const year = activeSection.id.replace("ach-year-", "");
+        const activeLink = nav.querySelector(`[data-year="${year}"]`);
+        if (activeLink) activeLink.classList.add("active");
+      }
     }
+  }
 
-    // distance of section from top of viewport
-    const distance = Math.abs(rect.top - 120);
-
-    if (rect.top <= 120 && distance < smallestDistance) {
-      smallestDistance = distance;
-      activeSection = section;
-    }
-  });
-
-  links.forEach(link => link.classList.remove("active"));
-
-  const year = activeSection.id.replace("ach-year-", "");
-  const activeLink = nav.querySelector(`[data-year="${year}"]`);
-
-  if (activeLink) activeLink.classList.add("active");
-}
-
-window.addEventListener("scroll", updateTimeline);
-window.addEventListener("resize", updateTimeline);
-
-updateTimeline();
+  window.addEventListener("scroll", updateTimeline);
+  window.addEventListener("resize", updateTimeline);
+  updateTimeline();
 
   display.querySelectorAll('.gallery-track').forEach(track => {
     const items = Array.from(track.querySelectorAll('.gallery-item'));
@@ -688,7 +731,6 @@ function renderSponsors(){
       </div>
     </div>`).join('');
 
-  // Scroll-triggered tab reveal
   const sponsorObs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if(entry.isIntersecting) entry.target.classList.add('visible');
@@ -718,7 +760,7 @@ function setupCarousel(){
     { name:'Nvidia',        logo:'assets/logos/nvidia.png',        url:'https://www.nvidia.com/' },
     { name:'MathWorks',     logo:'assets/logos/mathworks.png',     url:'https://www.mathworks.com/' },
     { name:'HunterDouglas', logo:'assets/logos/hunterdouglas.png', url:'https://www.hunterdouglas.com/' },
-    { name:'IMA',     logo:'assets/logos/ima.png',                 url:'https://indianmotorsportsacademy.com/' },
+    { name:'IMA',           logo:'assets/logos/ima.png',           url:'https://indianmotorsportsacademy.com/' },
     { name:'Novoflex',      logo:'assets/logos/novoflex.png',      url:'https://www.novoflex.com/' },
     { name:'SBG Systems',   logo:'assets/logos/sbgsystems.png',    url:'https://www.sbg-systems.com/' },
     { name:'Batemo',        logo:'assets/logos/batemo.png',        url:'https://www.batemo.com/' },
@@ -727,7 +769,6 @@ function setupCarousel(){
     { name:'Ramani',        logo:'assets/logos/ramani.png',        url:'https://www.ramani.com/' },
     { name:'VIT Vellore',   logo:'assets/logos/vit.png',           url:'https://vit.ac.in/' },
     { name:'Simscale',      logo:'assets/logos/simscale.png',      url:'https://www.simscale.com/' },
-
   ];
 
   const renderSet = (hidden) => sponsors.map(s =>
@@ -741,8 +782,8 @@ function setupCarousel(){
 
   track.innerHTML = renderSet(false) + renderSet(true);
 
-  // ~2.4s per logo, minimum 20s
-  const duration = Math.max(sponsors.length * 2.4, 20);
+  // Hardcode duration to identically match the 32s in photo carousel CSS
+  const duration = 32;
   track.style.animationDuration = duration + 's';
 }
 
@@ -873,7 +914,6 @@ setupCursor();
 setupReveal();
 setupTimelineAnimation();
 setupZZLabels();
-renderCars();
 renderSponsors();
 setupCarousel();
 function animateTelemetry(){
@@ -902,7 +942,6 @@ function animateTelemetry(){
 
 animateTelemetry();
 setupHeroParallax();
-// Trigger countup when team tab is clicked from another page
 document.querySelectorAll('[data-page]').forEach(btn => {
   if(btn.dataset.page === 'team') btn.addEventListener('click', () => setTimeout(runCountUp, 400));
 });
