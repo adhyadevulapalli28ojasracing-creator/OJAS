@@ -209,13 +209,13 @@ const deptNames = {leadership:'Team Leadership',pe:'Principal Engineers',powertr
 
 const achData = {
   '2025': {
-    gallery:['assets/achievements/1175-47.jpg','assets/achievements/1138-12.jpg','assets/achievements/1147-21.jpg','assets/achievements/1164-37.jpg','assets/achievements/1125-1.jpg'],
+    gallery:['assets/achievements/1175-47.jpg','assets/achievements/2502.JPG','assets/achievements/1147-21.jpg','assets/achievements/2504.JPG','assets/achievements/1125-1.jpg'],
     results:[{event:'Formula Student Concept Class',location:'Virtual Event - IN',rank:'1',desc:'Overall winners with a clean sweep across major static events.',tags:['1st Overall','Clean Sweep']},{event:'Business Plan Presentation',location:'FSCC 2025',rank:'1',desc:'A winning commercial case for a serious student-built EV race program.',tags:['Winners']},{event:'Cost and Manufacturing',location:'FSCC 2025',rank:'1',desc:'Lean manufacturing choices and strong cost-performance discipline.',tags:['Winners']},{event:'Engineering Design Presentation',location:'FSCC 2025',rank:'1',desc:'A strong technical defense of the complete vehicle design.',tags:['Winners']}],awards:[]},
   '2024': {
     gallery:['assets/achievements/8201.JPG','assets/achievements/8180.JPG','assets/achievements/8172.JPG','assets/achievements/8163.JPG','assets/achievements/8161.JPG'],
     results:[{event:'Formula Student Germany',location:'Hockenheimring - DE',rank:'26',desc:'Returned to one of the toughest Formula Student stages as one of the Indian representatives.',tags:['Global Stage']},{event:'Business Plan Presentation',location:'FSG 2024',rank:'26',desc:'Static event performance against elite international competition.',tags:['Static Event']}],awards:[{title:'International Return',body:'A major step back onto the global Formula Student grid.'},{title:'Static Event Growth',body:'Improved documentation, design defense and business positioning.'}]},
   '2022': {
-    gallery:['assets/achievements/2101.jpg','assets/achievements/2105.JPG','assets/achievements/2102.jpg','assets/achievements/2104.jpg','assets/achievements/2103.jpg'],
+    gallery:['assets/achievements/2101.jpg','assets/achievements/1806.jpeg','assets/achievements/2102.jpg','assets/achievements/2104.jpg','assets/achievements/2103.jpg'],
     results:[{event:'Formula SAE Italy',location:'Riccardo Paletti Circuit - IT',rank:'4',desc:'A strong international result and one of the best performances from India.',tags:['Top 5','Best From Asia']},{event:'Cost and Manufacturing',location:'Formula SAE Italy',rank:'4',desc:'High manufacturing maturity at a fraction of typical race program cost.',tags:['Top 5']},{event:'Business Plan Presentation',location:'Formula SAE Italy',rank:'5',desc:'A sharp business case that placed inside the top five.',tags:['Top 5']}],awards:[{title:'International TI',body:'Historic technical inspection progress at an international event.'}]},
   '2021': {
     gallery:[],
@@ -515,20 +515,39 @@ function renderAchievements(){
   const sections = display.querySelectorAll('.year-sec');
   const links = nav.querySelectorAll('.timeline-link');
 
-  const yearObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        links.forEach(l => l.classList.remove('active'));
-        const match = nav.querySelector(`[data-year="${entry.target.id.replace('ach-year-','')}"]`);
-        if(match) match.classList.add('active');
-        entry.target.classList.add('visible');
-        yearObs.unobserve(entry.target); // stop watching once visible
-      }
-    });
-  }, {threshold:.2});
+  function updateTimeline() {
+  let activeSection = sections[0];
+  let smallestDistance = Infinity;
 
-  sections.forEach(s => yearObs.observe(s));
-  achObservers.push(yearObs);
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+
+    // reveal animation
+    if (rect.top < window.innerHeight * 0.85) {
+      section.classList.add("visible");
+    }
+
+    // distance of section from top of viewport
+    const distance = Math.abs(rect.top - 120);
+
+    if (rect.top <= 120 && distance < smallestDistance) {
+      smallestDistance = distance;
+      activeSection = section;
+    }
+  });
+
+  links.forEach(link => link.classList.remove("active"));
+
+  const year = activeSection.id.replace("ach-year-", "");
+  const activeLink = nav.querySelector(`[data-year="${year}"]`);
+
+  if (activeLink) activeLink.classList.add("active");
+}
+
+window.addEventListener("scroll", updateTimeline);
+window.addEventListener("resize", updateTimeline);
+
+updateTimeline();
 
   display.querySelectorAll('.gallery-track').forEach(track => {
     const items = Array.from(track.querySelectorAll('.gallery-item'));
@@ -589,7 +608,9 @@ function renderSponsors(){
     <div class="sponsor-card" onclick="toggleSponsor(this)">
       <div class="sponsor-card-inner">
         <div class="sponsor-front">
-          <img src="${item.logo}" class="sponsor-logo" alt="${item.name}"
+          <img src="${item.logo}"
+     class="sponsor-logo ${item.name === 'Electrifuel' ? 'electrifuel-logo' : ''}"
+     alt="${item.name}"
                onerror="this.style.display='none'">
           <a class="sponsor-tab" href="${item.url || '#'}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
             <span>${item.name}</span>
