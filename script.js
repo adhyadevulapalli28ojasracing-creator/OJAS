@@ -230,10 +230,62 @@ const achData = {
       {event:'Best Battery Design',location:'FSEV UK 2019',rank:'AWD',desc:'Recognised for innovation, safety and engineering excellence in accumulator design.',tags:['AWARD']},
       {event:'Best Powertrain Design',location:'FSEV UK 2019',rank:'AWD',desc:'Awarded for performance, efficiency and integration of the electric drivetrain.',tags:['AWARD']}
     ],awards:[]},
-  '2018': {
-    gallery:['assets/achievements/1803.jpg','assets/achievements/1802.JPG','assets/achievements/1804.jpg','assets/achievements/4217.jpg','assets/achievements/1801.jpg'],
-    results:[{event:'Formula Bharat',location:'Kari Motor Speedway - IN',rank:'3',desc:'A national podium and one of the team\'s strongest early results.',tags:['National Podium']},{event:'FSEV Cost Report',location:'Formula Bharat 2018',rank:'1',desc:'A standout cost-performance result.',tags:['Winners']},{event:'FSEV Business Plan',location:'Formula Bharat 2018',rank:'3',desc:'Strong commercial storytelling and presentation quality.',tags:['National Podium']}],awards:[]}
-};
+ '2018': {
+  gallery: [
+    'assets/achievements/1803.jpg',
+    'assets/achievements/1802.JPG',
+    'assets/achievements/1804.jpg',
+    'assets/achievements/4217.jpg',
+    'assets/achievements/1801.jpg'
+  ],
+
+  results: [
+    {
+      event: 'Formula Bharat',
+      location: 'Kari Motor Speedway - IN',
+      rank: '3',
+      desc: 'A national podium and one of the team\'s strongest early results.',
+      tags: ['National Podium']
+    },
+    {
+    event: 'FSEV Cost Report',
+    location: 'Formula Bharat 2018',
+    rank: '1',
+    desc: 'A standout cost-performance result that reflected meticulous manufacturing planning, design efficiency and engineering excellence.',
+    tags: ['Winners']
+  },
+  {
+    event: 'FSEV Business Plan',
+    location: 'Formula Bharat 2018',
+    rank: '3',
+    desc: 'Recognised for presenting a compelling business case and communicating the technical vision of the vehicle with confidence.',
+    tags: ['National Podium']
+  },
+    {
+      event: 'Formula SAE Italy',
+      location: 'Riccardo Paletti Circuit - IT',
+      rank: '12',
+      desc: 'An international performance that showcased Team Ojas\' growing technical capabilities and resilience against some of the world\'s leading Formula Student teams.',
+      tags: ['International']
+    },
+    {
+      event: 'Cost Event',
+      location: 'Formula SAE Italy 2018',
+      rank: '5',
+      desc: 'A strong cost-performance result that demonstrated the team\'s manufacturing maturity, design efficiency and engineering discipline.',
+      tags: ['Top 5']
+    },
+    {
+      event: 'Presentation Event',
+      location: 'Formula SAE Italy 2018',
+      rank: '8',
+      desc: 'Recognised for communicating the vehicle\'s technical depth, innovation and commercial vision with confidence on an international platform.',
+      tags: ['Top 10']
+    }
+  ],
+
+  awards: []
+}}
 
 const sponsorData = [
   {tier:'Title Sponsor',title:'Powering The Mission',compact:false,items:[
@@ -478,22 +530,29 @@ function renderAchievements(){
 
   display.innerHTML = years.map(yr => {
     const data = achData[yr];
-    const cards = data.results.map(r => `
-      <div class="ach-card" onclick="toggleAchCard(this)">
-        <div class="ach-card-inner">
-          <div class="ach-front">
-            <div class="ach-watermark">${r.rank}</div>
-            <div class="ach-card-title">${r.event}</div>
-            <div class="ach-rank">${r.rank}</div>
-            <div class="ach-rank-text">POSITION</div>
-            <div class="ach-flip-hint">tap for details</div>
-          </div>
-          <div class="ach-back">
-            <div class="ach-back-title">${r.event}</div>
-            <div class="ach-back-desc">${r.desc}</div>
-          </div>
-        </div>
-      </div>`).join('');
+    const cards = data.results.map((r, i) => `
+  ${yr === '2018' && i === 3 ? `
+    <div class="ach-subheading">
+      Riccardo Paletti Circuit - IT
+    </div>
+  ` : ''}
+
+  <div class="ach-card" onclick="toggleAchCard(this)">
+    <div class="ach-card-inner">
+      <div class="ach-front">
+        <div class="ach-watermark">${r.rank}</div>
+        <div class="ach-card-title">${r.event}</div>
+        <div class="ach-rank">${r.rank}</div>
+        <div class="ach-rank-text">POSITION</div>
+        <div class="ach-flip-hint">tap for details</div>
+      </div>
+      <div class="ach-back">
+        <div class="ach-back-title">${r.event}</div>
+        <div class="ach-back-desc">${r.desc}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
     const galleryHTML = data.gallery && data.gallery.length ? `
       <div class="year-gallery">
         <div class="gallery-track">
@@ -507,7 +566,13 @@ function renderAchievements(){
           <div class="year-num">${yr}</div>
           <div class="year-sub">${data.results[0]?.location || ''}</div>
         </div>
-        <div class="ach-cards ${data.results.length === 4 ? 'four-up' : ''}">${cards}</div>
+      <div class="ach-cards ${
+  data.results.length === 4
+    ? 'four-up'
+    : data.results.length === 6
+    ? 'three-up'
+    : ''
+}">${cards}</div>
         ${galleryHTML}
       </section>`;
   }).join('');

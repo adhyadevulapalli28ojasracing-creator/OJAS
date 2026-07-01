@@ -334,7 +334,22 @@ main{padding-top:68px}
 .year-num{font-family:'Barlow Condensed',sans-serif;font-size:140px;line-height:.8;font-weight:900;color:var(--gold)}
 .year-sub{font-size:17px;color:var(--muted);letter-spacing:.25em;text-transform:uppercase;margin-bottom:16px}
 .ach-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
-.ach-cards.four-up{grid-template-columns:repeat(4,1fr)}
+.ach-cards.four-up{
+    grid-template-columns:repeat(4,1fr);
+}
+
+.ach-cards.three-up{
+    grid-template-columns:repeat(3,1fr);
+}
+.ach-subheading{
+    grid-column: 1 / -1;
+    margin: 8px 0 0;
+    font-size: 1rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+}
 .ach-card{height:320px;perspective:1200px;border-radius:20px;box-shadow:0 0 0 1px rgba(255,255,255,.06),0 0 18px rgba(201,168,76,.08);transition:transform .3s}
 .ach-card:hover{transform:translateY(-6px)}
 .ach-card:hover,.ach-card.flipped{box-shadow:0 0 0 1px rgba(201,168,76,.4),0 0 25px rgba(201,168,76,.22),0 0 60px rgba(201,168,76,.12)}
