@@ -64,7 +64,7 @@ const carData = [
   {year:'2018',season:'Season 7',name:'TOR-18',image:'assets/tor-18.webp', gallery: tor18Gallery, desc:'A pre-pandemic benchmark generation focused on manufacturing maturity, race reliability and stronger static event preparation.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.6 s','Accumulator':'5.0 kWh','Mass':'268 kg'}},
   {year:'2017',season:'Season 6',name:'TOR-17',image:'assets/tor-17-render.png', gallery: tor17Gallery, desc:'An important design iteration that helped mature the team architecture, testing discipline and subsystem ownership.',specs:{'Peak Power':'60 kW','0-100 km/h':'5.7 s','Accumulator':'5.0 kWh','Mass':'270 kg'}},
   {year:'2016',season:'Season 5',name:'TOR-16',image:'assets/tor-16.jpg', gallery: tor16Gallery, desc:'A foundational competitive car that strengthened the team culture and set the direction for future electric race builds.',specs:{'Peak Power':'55 kW','0-100 km/h':'5.9 s','Accumulator':'4.8 kWh','Mass':'272 kg'}},
-  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-18-render.png', gallery: originGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}} 
+  {year:'2012-15',season:'Origin Years',name:'Vidhyut to TOR-15',image:'assets/tor-15.png', gallery: originGallery, desc:'The years where Team Ojas built its first cars, learned by doing and created the engineering culture that still powers the team.',specs:{'Generations':'4','Focus':'Learning','Platform':'Electric','Legacy':'Foundation'}} 
 ];
  
 const teamData = {
