@@ -421,11 +421,9 @@ function renderCars(){
       <section class="year-sec car-year-sec" id="car-year-${car.year}">
         <div class="year-head">
           <div class="year-num">${car.year}</div>
-          <div class="year-sub">${car.season}</div>
         </div>
         <div class="car-showcase" style="margin-bottom: 24px;">
           <article class="car-info">
-            <span class="car-badge">${car.season}</span>
             <h2 class="car-name">${formatCarName(car.name)}</h2>
             <p>${car.desc}</p>
             <div class="spec-grid">
